@@ -1,27 +1,27 @@
 <table>
     <tr>
         <td>License</td>
-        <td><img src='https://img.shields.io/pypi/l/browsers.svg?style=for-the-badge' alt="License"></td>
+        <td><img src='https://img.shields.io/pypi/l/pybrowsers.svg?style=for-the-badge' alt="License"></td>
         <td>Version</td>
-        <td><img src='https://img.shields.io/pypi/v/browsers.svg?logo=pypi&style=for-the-badge' alt="Version"></td>
+        <td><img src='https://img.shields.io/pypi/v/pybrowsers.svg?logo=pypi&style=for-the-badge' alt="Version"></td>
     </tr>
     <tr>
         <td>Github Actions</td>
-        <td><img src='https://img.shields.io/github/workflow/status/roniemartinez/browsers/Python?label=actions&logo=github%20actions&style=for-the-badge' alt="Github Actions"></td>
+        <td><img src='https://img.shields.io/github/workflow/status/roniemartinez/pybrowsers/Python?label=actions&logo=github%20actions&style=for-the-badge' alt="Github Actions"></td>
         <td>Coverage</td>
-        <td><img src='https://img.shields.io/codecov/c/github/roniemartinez/browsers/branch?label=codecov&logo=codecov&style=for-the-badge' alt="CodeCov"></td>
+        <td><img src='https://img.shields.io/codecov/c/github/roniemartinez/pybrowsers/branch?label=codecov&logo=codecov&style=for-the-badge' alt="CodeCov"></td>
     </tr>
     <tr>
         <td>Supported versions</td>
-        <td><img src='https://img.shields.io/pypi/pyversions/browsers.svg?logo=python&style=for-the-badge' alt="Python Versions"></td>
+        <td><img src='https://img.shields.io/pypi/pyversions/pybrowsers.svg?logo=python&style=for-the-badge' alt="Python Versions"></td>
         <td>Wheel</td>
-        <td><img src='https://img.shields.io/pypi/wheel/browsers.svg?style=for-the-badge' alt="Wheel"></td>
+        <td><img src='https://img.shields.io/pypi/wheel/pybrowsers.svg?style=for-the-badge' alt="Wheel"></td>
     </tr>
     <tr>
         <td>Status</td>
-        <td><img src='https://img.shields.io/pypi/status/browsers.svg?style=for-the-badge' alt="Status"></td>
+        <td><img src='https://img.shields.io/pypi/status/pybrowsers.svg?style=for-the-badge' alt="Status"></td>
         <td>Downloads</td>
-        <td><img src='https://img.shields.io/pypi/dm/browsers.svg?style=for-the-badge' alt="Downloads"></td>
+        <td><img src='https://img.shields.io/pypi/dm/pybrowsers.svg?style=for-the-badge' alt="Downloads"></td>
     </tr>
 </table>
 
@@ -36,7 +36,7 @@ Python library for detecting and launching browsers
 ## Installation
 
 ```bash
-pip install browsers
+pip install pybrowsers
 ```
 
 ## Usage

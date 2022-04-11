@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "browsers"
-version = "0.1.0-alpha.0"
+name = "pybrowsers"
+version = "0.0.0-alpha.0"
 repository = "https://github.com/roniemartinez/browsers"
 description = "Python library for detecting and launching browsers"
 authors = ["Ronie Martinez <ronmarti18@gmail.com>"]
