@@ -50,4 +50,8 @@ def launch(browser: str, url: str, args: Optional[Union[str, Sequence[str]]] = N
     if not b:
         logger.info("Cannot find browser '%s'", browser)
         return
-    subprocess.Popen(["open", "--wait-apps", "--new", "--fresh", "-a", b["path"], url, "--args", *args])
+    _launch(b["path"], url, args)
+
+
+def _launch(path: str, url: str, args: Optional[Union[str, Sequence[str]]] = None):  # pragma: no cover
+    subprocess.Popen(["open", "--wait-apps", "--new", "--fresh", "-a", path, url, "--args", *args])
