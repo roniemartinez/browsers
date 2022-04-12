@@ -1,6 +1,5 @@
 import logging
 import os
-import platform
 import plistlib
 import subprocess
 import sys
@@ -31,13 +30,14 @@ BROWSER_LIST = (
 
 
 def get_available_browsers() -> Iterator[Tuple[str, Dict]]:
-    _platform = platform.platform()
-    if _platform != "darwin":  # pragma: no cover
+    platform = sys.platform
+    if platform != "darwin":  # pragma: no cover
         logger.info(
             "'%s' is currently not supported. Please open an issue or a PR at '%s'",
-            _platform,
+            platform,
             "https://github.com/roniemartinez/browsers",
         )
+        return
     for browser, bundle_id, version_string in BROWSER_LIST:
         paths = subprocess.getoutput(f'mdfind "kMDItemCFBundleIdentifier == {bundle_id}"').splitlines()
         for path in paths:
