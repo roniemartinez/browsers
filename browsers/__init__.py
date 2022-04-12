@@ -1,9 +1,16 @@
+import logging
 import os
+import platform
 import plistlib
 import subprocess
-from typing import Dict, Iterator, Optional, Tuple
+import sys
+from typing import Dict, Iterator, Optional, Sequence, Tuple
+
+logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+logger = logging.getLogger(__name__)
 
 BROWSER_LIST = (
+    # browser name, bundle ID, version string
     ("chrome", "com.google.Chrome", "KSVersion"),
     ("chrome-canary", "com.google.Chrome.canary", "KSVersion"),
     ("chromium", "org.chromium.Chromium", "CFBundleShortVersionString"),
@@ -24,6 +31,13 @@ BROWSER_LIST = (
 
 
 def get_available_browsers() -> Iterator[Tuple[str, Dict]]:
+    _platform = platform.platform()
+    if _platform != "darwin":  # pragma: no cover
+        logger.info(
+            "'%s' is currently not supported. Please open an issue or a PR at '%s'",
+            _platform,
+            "https://github.com/roniemartinez/browsers",
+        )
     for browser, bundle_id, version_string in BROWSER_LIST:
         paths = subprocess.getoutput(f'mdfind "kMDItemCFBundleIdentifier == {bundle_id}"').splitlines()
         for path in paths:
@@ -38,5 +52,15 @@ def get(browser: str) -> Optional[Dict]:
     return dict(get_available_browsers()).get(browser)
 
 
-if __name__ == "__main__":
-    print(get("chrome"))
+def launch(browser: str, url: str, args: Optional[Sequence[str]] = None) -> None:
+    if args is None:
+        args = []
+    b = get(browser)
+    if not b:
+        logger.info("Cannot find browser '%s'", browser)
+        return
+    _launch(b["path"], url, args)
+
+
+def _launch(path: str, url: str, args: Sequence[str]) -> None:  # pragma: no cover
+    subprocess.Popen(["open", "--wait-apps", "--new", "--fresh", "-a", path, url, "--args", *args])

@@ -44,9 +44,10 @@ pip install pybrowsers
 ### Python
 
 ```python
-import browsers
-
-browser = browsers.get("chrome")
+>>> import browsers
+>>> browsers.get("chrome")
+{'path': '/Applications/Google Chrome.app', 'display_name': 'Google Chrome', 'version': '100.0.4896.88'}
+>>> browsers.launch("chrome", url="https://github.com/roniemartinez/browsers")
 ```
 
 ## TODO:
@@ -54,7 +55,7 @@ browser = browsers.get("chrome")
 - [x] Detect browser on OSX
 - [ ] Detect browser on Linux/Unix
 - [ ] Detect browser on Windows
-- [ ] Launch browser with arguments
+- [X] Launch browser with arguments
 - [ ] Get browser by version (support wildcards)
 
 ## Author
