@@ -1,9 +1,15 @@
+import logging
 import os
 import plistlib
 import subprocess
-from typing import Dict, Iterator, Optional, Tuple
+import sys
+from typing import Dict, Iterator, Optional, Sequence, Tuple, Union
+
+logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+logger = logging.getLogger(__name__)
 
 BROWSER_LIST = (
+    # browser name, bundle ID, version string
     ("chrome", "com.google.Chrome", "KSVersion"),
     ("chrome-canary", "com.google.Chrome.canary", "KSVersion"),
     ("chromium", "org.chromium.Chromium", "CFBundleShortVersionString"),
@@ -36,6 +42,15 @@ def get_available_browsers() -> Iterator[Tuple[str, Dict]]:
 
 def get(browser: str) -> Optional[Dict]:
     return dict(get_available_browsers()).get(browser)
+
+
+def launch(browser: str, url: str, args: Optional[Union[str, Sequence[str]]] = None) -> None:
+    args = args or []
+    b = get(browser)
+    if not b:
+        logger.info("Cannot find browser '%s'", browser)
+        return
+    subprocess.Popen(["open", "--wait-apps", "--new", "--fresh", "-a", b["path"], url, "--args", *args])
 
 
 if __name__ == "__main__":
