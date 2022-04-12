@@ -51,7 +51,3 @@ def launch(browser: str, url: str, args: Optional[Union[str, Sequence[str]]] = N
         logger.info("Cannot find browser '%s'", browser)
         return
     subprocess.Popen(["open", "--wait-apps", "--new", "--fresh", "-a", b["path"], url, "--args", *args])
-
-
-if __name__ == "__main__":
-    print(get("chrome"))

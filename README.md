@@ -44,9 +44,10 @@ pip install pybrowsers
 ### Python
 
 ```python
-import browsers
-
-browser = browsers.get("chrome")
+>>> import browsers
+>>> browsers.get("chrome")
+{'path': '/Applications/Google Chrome.app', 'display_name': 'Google Chrome', 'version': '100.0.4896.88'}
+>>> browsers.launch("chrome", "https://github.com/roniemartinez/browsers")
 ```
 
 ## TODO:
