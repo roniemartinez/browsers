@@ -1,6 +1,7 @@
 import logging
 import os
 import plistlib
+import shlex
 import subprocess
 import sys
 from typing import Dict, Iterator, Optional, Sequence, Tuple
@@ -93,6 +94,7 @@ def get(browser: str) -> Optional[Dict]:
     for key, value in get_available_browsers():
         if key == browser:
             return value
+    return None
 
 
 def launch(browser: str, url: str, args: Optional[Sequence[str]] = None) -> None:
@@ -106,7 +108,7 @@ def launch(browser: str, url: str, args: Optional[Sequence[str]] = None) -> None
 
 
 def _launch(path: str, url: str, args: Sequence[str]) -> None:  # pragma: no cover
-    command = [path, url, "--args", *args]
+    command = [*shlex.split(path), url, "--args", *args]
     if sys.platform == "darwin":
         command = ["open", "--wait-apps", "--new", "--fresh", "-a", *command]
     subprocess.Popen(command)
