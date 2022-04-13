@@ -1,3 +1,4 @@
+import sys
 from typing import Dict
 from unittest import mock
 from unittest.mock import ANY
@@ -12,12 +13,18 @@ These tests assume that Chrome, Firefox, Safari and Microsoft Edge are installed
 """
 
 
-def test_get_available_browsers() -> None:
+@pytest.mark.parametrize(
+    "browser",
+    (
+        pytest.param("chrome", id="chrome"),
+        pytest.param("firefox", id="firefox"),
+        pytest.param("safari", id="safari", marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only")),
+        pytest.param("msedge", id="msedge", marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only")),
+    ),
+)
+def test_get_available_browsers(browser: str) -> None:
     available_browsers = dict(get_available_browsers())
-    assert "chrome" in available_browsers
-    assert "firefox" in available_browsers
-    assert "safari" in available_browsers
-    assert "msedge" in available_browsers
+    assert browser in available_browsers
 
 
 @pytest.mark.parametrize(
@@ -30,7 +37,8 @@ def test_get_available_browsers() -> None:
                 "path": "/Applications/Google Chrome.app",
                 "version": ANY,
             },
-            id="chrome",
+            marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
+            id="chrome-osx",
         ),
         pytest.param(
             "firefox",
@@ -39,7 +47,8 @@ def test_get_available_browsers() -> None:
                 "path": "/Applications/Firefox.app",
                 "version": ANY,
             },
-            id="firefox",
+            marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
+            id="firefox-osx",
         ),
         pytest.param(
             "safari",
@@ -48,7 +57,8 @@ def test_get_available_browsers() -> None:
                 "path": "/Applications/Safari.app",
                 "version": ANY,
             },
-            id="safari",
+            id="safari-osx",
+            marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
         ),
         pytest.param(
             "msedge",
@@ -57,7 +67,28 @@ def test_get_available_browsers() -> None:
                 "path": "/Applications/Microsoft Edge.app",
                 "version": ANY,
             },
-            id="msedge",
+            id="msedge-osx",
+            marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
+        ),
+        pytest.param(
+            "chrome",
+            {
+                "display_name": "Google Chrome",
+                "path": "/usr/bin/google-chrome-stable",
+                "version": ANY,
+            },
+            marks=pytest.mark.skipif(sys.platform != "linux", reason="linux-only"),
+            id="chrome-linux",
+        ),
+        pytest.param(
+            "firefox",
+            {
+                "display_name": "Firefox Web Browser",
+                "path": "firefox",
+                "version": ANY,
+            },
+            marks=pytest.mark.skipif(sys.platform != "linux", reason="linux-only"),
+            id="firefox-linux",
         ),
     ),
 )
@@ -65,10 +96,25 @@ def test_get(browser: str, details: Dict) -> None:
     assert browsers.get(browser) == details
 
 
+@pytest.mark.parametrize(
+    "chrome_path",
+    (
+        pytest.param(
+            "/Applications/Google Chrome.app",
+            id="osx",
+            marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
+        ),
+        pytest.param(
+            "/usr/bin/google-chrome-stable",
+            id="linux",
+            marks=pytest.mark.skipif(sys.platform != "linux", reason="linux-only"),
+        ),
+    ),
+)
 @mock.patch.object(browsers, "_launch")
-def test_launch(mock_launch: mock.MagicMock) -> None:
+def test_launch(mock_launch: mock.MagicMock, chrome_path: str) -> None:
     browsers.launch("chrome", url="https://github.com/roniemartinez/browsers")
-    mock_launch.assert_called_with("/Applications/Google Chrome.app", "https://github.com/roniemartinez/browsers", [])
+    mock_launch.assert_called_with(chrome_path, "https://github.com/roniemartinez/browsers", [])
 
 
 @mock.patch.object(browsers, "_launch")
