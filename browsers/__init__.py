@@ -90,7 +90,9 @@ def get_available_browsers() -> Iterator[Tuple[str, Dict]]:
 
 
 def get(browser: str) -> Optional[Dict]:
-    return dict(get_available_browsers()).get(browser)
+    for key, value in get_available_browsers():
+        if key == browser:
+            return value
 
 
 def launch(browser: str, url: str, args: Optional[Sequence[str]] = None) -> None:
