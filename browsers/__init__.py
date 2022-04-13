@@ -33,7 +33,7 @@ OSX_BROWSER_BUNDLE_LIST = (
 
 LINUX_DESKTOP_ENTRY_LIST = (
     ("chrome", ("google-chrome",)),
-    ("chromium", ("chromium",)),
+    ("chromium", ("chromium", "chromium_chromium")),
     ("firefox", ("firefox", "firefox_firefox")),
     ("msedge", ("microsoft-edge",)),
     ("opera", ("opera_opera",)),
