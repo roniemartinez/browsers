@@ -18,6 +18,8 @@ BROWSER_LIST = (
     ("firefox-nightly", "org.mozilla.nightly", "CFBundleShortVersionString"),
     ("safari", "com.apple.Safari", "CFBundleShortVersionString"),
     ("opera", "com.operasoftware.Opera", "CFBundleVersion"),
+    ("opera-beta", "com.operasoftware.OperaNext", "CFBundleVersion"),
+    ("opera-developer", "com.operasoftware.OperaDeveloper", "CFBundleVersion"),
     ("msedge", "com.microsoft.edgemac", "CFBundleVersion"),
     ("msedge-beta", "com.microsoft.edgemac.Beta", "CFBundleVersion"),
     ("msedge-dev", "com.microsoft.edgemac.Dev", "CFBundleVersion"),
