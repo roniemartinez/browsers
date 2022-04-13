@@ -53,9 +53,9 @@ pip install pybrowsers
 ## TODO:
 
 - [x] Detect browser on OSX
-- [ ] Detect browser on Linux/Unix
+- [x] Detect browser on Linux
 - [ ] Detect browser on Windows
-- [X] Launch browser with arguments
+- [x] Launch browser with arguments
 - [ ] Get browser by version (support wildcards)
 
 ## Author
