@@ -104,11 +104,14 @@ def launch(browser: str, url: str, args: Optional[Sequence[str]] = None) -> None
     if not b:
         logger.info("Cannot find browser '%s'", browser)
         return
-    _launch(b["path"], url, args)
+    _launch(browser, b["path"], url, args)
 
 
-def _launch(path: str, url: str, args: Sequence[str]) -> None:  # pragma: no cover
-    command = [*shlex.split(path), url, "--args", *args]
+def _launch(browser: str, path: str, url: str, args: Sequence[str]) -> None:  # pragma: no cover
+    url_arg = [] if browser == "firefox" else [url]
+    if browser == "firefox":
+        args = ("-new-tab", url, *args)
+    command = [*shlex.split(path), *url_arg, "--args", *args]
     if sys.platform == "darwin":
         command = ["open", "--wait-apps", "--new", "--fresh", "-a", *command]
     subprocess.Popen(command)
