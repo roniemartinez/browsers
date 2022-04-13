@@ -70,7 +70,6 @@ def get_available_browsers() -> Iterator[Tuple[str, Dict]]:
                     # FIXME: --version includes the name for most browsers
                     version = subprocess.getoutput(f"{executable_path} --version")
                     info = dict(path=executable_path, display_name=entry.getName(), version=version)
-                    print(info)
                     yield browser, info
         return
     if platform != "darwin":  # pragma: no cover
