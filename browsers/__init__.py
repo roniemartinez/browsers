@@ -51,10 +51,17 @@ XDG_DATA_LOCATIONS = (
     "/var/lib/snapd/desktop/applications",
 )
 
+WINDOWS_REGISTRY_BROWSER_NAMES = {
+    "Google Chrome": "chrome",
+    "Mozilla Firefox": "firefox",
+    "Microsoft Edge": "msedge",
+    "Internet Explorer": "msie",
+    # TODO: Add more browsers
+}
+
 
 def get_available_browsers() -> Iterator[Tuple[str, Dict]]:
-    platform = sys.platform
-    if platform == "linux":
+    if sys.platform == "linux":
         from xdg.DesktopEntry import DesktopEntry
 
         for browser, desktop_entries in LINUX_DESKTOP_ENTRY_LIST:
@@ -72,22 +79,69 @@ def get_available_browsers() -> Iterator[Tuple[str, Dict]]:
                     version = subprocess.getoutput(f"{executable_path} --version")
                     info = dict(path=executable_path, display_name=entry.getName(), version=version)
                     yield browser, info
-        return
-    if platform != "darwin":  # pragma: no cover
+    elif sys.platform == "win32":
+        import winreg
+
+        yield from get_browsers_from_registry(winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
+        yield from get_browsers_from_registry(winreg.KEY_READ | winreg.KEY_WOW64_32KEY)
+    elif sys.platform == "darwin":
+        for browser, bundle_id, version_string in OSX_BROWSER_BUNDLE_LIST:
+            paths = subprocess.getoutput(f'mdfind "kMDItemCFBundleIdentifier == {bundle_id}"').splitlines()
+            for path in paths:
+                with open(os.path.join(path, "Contents/Info.plist"), "rb") as f:
+                    plist = plistlib.load(f)
+                    display_name = plist.get("CFBundleDisplayName") or plist.get("CFBundleName", browser)
+                    version = plist[version_string]
+                    yield browser, dict(path=path, display_name=display_name, version=version)
+    else:  # pragma: no cover
         logger.info(
             "'%s' is currently not supported. Please open an issue or a PR at '%s'",
-            platform,
+            sys.platform,
             "https://github.com/roniemartinez/browsers",
         )
+
+
+def get_browsers_from_registry(access: int) -> Iterator[Tuple[str, Dict]]:
+    if sys.platform != "win32":
         return
-    for browser, bundle_id, version_string in OSX_BROWSER_BUNDLE_LIST:
-        paths = subprocess.getoutput(f'mdfind "kMDItemCFBundleIdentifier == {bundle_id}"').splitlines()
-        for path in paths:
-            with open(os.path.join(path, "Contents/Info.plist"), "rb") as f:
-                plist = plistlib.load(f)
-                display_name = plist.get("CFBundleDisplayName") or plist.get("CFBundleName", browser)
-                version = plist[version_string]
-                yield browser, dict(path=path, display_name=display_name, version=version)
+
+    import winreg
+
+    key = r"Software\Clients\StartMenuInternet"
+    with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, key, access=access) as hkey:
+        i = 0
+        while True:
+            try:
+                subkey = winreg.EnumKey(hkey, i)
+                i += 1
+            except OSError:
+                break
+            try:
+                name = winreg.QueryValue(hkey, subkey)
+                if not name or not isinstance(name, str):
+                    name = subkey
+            except OSError:
+                name = subkey
+            try:
+                cmd = winreg.QueryValue(hkey, rf"{subkey}\shell\open\command")
+                cmd = cmd.strip('"')
+                os.stat(cmd)
+            except (OSError, AttributeError, TypeError, ValueError):
+                continue
+            info = dict(path=cmd, display_name=name, version=get_file_version(cmd))
+            yield WINDOWS_REGISTRY_BROWSER_NAMES.get(name, "unknown"), info
+
+
+def get_file_version(path: str) -> str:
+    if sys.platform != "win32":
+        return ""
+
+    import win32api
+
+    info = win32api.GetFileVersionInfo(path, "\\")
+    ms = info["FileVersionMS"]
+    ls = info["FileVersionLS"]
+    return ".".join((win32api.HIWORD(ms), win32api.LOWORD(ms), win32api.HIWORD(ls), win32api.LOWORD(ls)))
 
 
 def get(browser: str) -> Optional[Dict]:

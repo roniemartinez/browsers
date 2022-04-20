@@ -19,7 +19,10 @@ These tests assume that Chrome, Firefox, Safari and Microsoft Edge are installed
         pytest.param("chrome", id="chrome"),
         pytest.param("firefox", id="firefox"),
         pytest.param("safari", id="safari", marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only")),
-        pytest.param("msedge", id="msedge", marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only")),
+        pytest.param(
+            "msedge", id="msedge", marks=pytest.mark.skipif(sys.platform == "linux", reason="osx-and-windows-only")
+        ),
+        pytest.param("msie", id="msie", marks=pytest.mark.skipif(sys.platform != "win32", reason="windows-only")),
     ),
 )
 def test_get_available_browsers(browser: str) -> None:
@@ -57,8 +60,8 @@ def test_get_available_browsers(browser: str) -> None:
                 "path": "/Applications/Safari.app",
                 "version": ANY,
             },
-            id="safari-osx",
             marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
+            id="safari-osx",
         ),
         pytest.param(
             "msedge",
@@ -67,8 +70,8 @@ def test_get_available_browsers(browser: str) -> None:
                 "path": "/Applications/Microsoft Edge.app",
                 "version": ANY,
             },
-            id="msedge-osx",
             marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
+            id="msedge-osx",
         ),
         pytest.param(
             "chrome",
@@ -90,6 +93,46 @@ def test_get_available_browsers(browser: str) -> None:
             marks=pytest.mark.skipif(sys.platform != "linux", reason="linux-only"),
             id="firefox-linux",
         ),
+        pytest.param(
+            "chrome",
+            {
+                "display_name": "Google Chrome",
+                "path": r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+                "version": ANY,
+            },
+            marks=pytest.mark.skipif(sys.platform != "win32", reason="windows-only"),
+            id="chrome-win32",
+        ),
+        pytest.param(
+            "firefox",
+            {
+                "display_name": "Mozilla Firefox",
+                "path": r"C:\Program Files\Mozilla Firefox\firefox.exe",
+                "version": ANY,
+            },
+            marks=pytest.mark.skipif(sys.platform != "win32", reason="windows-only"),
+            id="firefox-win32",
+        ),
+        pytest.param(
+            "msedge",
+            {
+                "display_name": "Microsoft Edge",
+                "path": r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
+                "version": ANY,
+            },
+            marks=pytest.mark.skipif(sys.platform != "win32", reason="windows-only"),
+            id="msedge-win32",
+        ),
+        pytest.param(
+            "msie",
+            {
+                "display_name": "Internet Explorer",
+                "path": r"C:\Program Files\Internet Explorer\iexplore.exe",
+                "version": ANY,
+            },
+            marks=pytest.mark.skipif(sys.platform != "win32", reason="windows-only"),
+            id="msie-win32",
+        ),
     ),
 )
 def test_get(browser: str, details: Dict) -> None:
@@ -108,6 +151,11 @@ def test_get(browser: str, details: Dict) -> None:
             "/usr/bin/google-chrome-stable",
             id="linux",
             marks=pytest.mark.skipif(sys.platform != "linux", reason="linux-only"),
+        ),
+        pytest.param(
+            r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+            id="windows",
+            marks=pytest.mark.skipif(sys.platform != "win32", reason="windows-only"),
         ),
     ),
 )

@@ -54,9 +54,16 @@ pip install pybrowsers
 
 - [x] Detect browser on OSX
 - [x] Detect browser on Linux
-- [ ] Detect browser on Windows
+- [X] Detect browser on Windows
 - [x] Launch browser with arguments
 - [ ] Get browser by version (support wildcards)
+
+## References
+
+- [httptoolkit/browser-launcher](https://github.com/httptoolkit/browser-launcher)
+- [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/)
+- [Github: webbrowser.open incomplete on Windows](https://github.com/python/cpython/issues/52479#issuecomment-1093496412)
+- [Stackoverflow: Grabbing full file version of an exe in Python](https://stackoverflow.com/a/68774871/1279157)
 
 ## Author
 
