@@ -101,47 +101,44 @@ def get_available_browsers() -> Iterator[Tuple[str, Dict]]:
         )
 
 
-def get_browsers_from_registry(access: int) -> Iterator[Tuple[str, Dict]]:
-    if sys.platform != "win32":
-        return
+def get_browsers_from_registry(access: int) -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
+    if sys.platform == "win32":
+        import winreg
 
-    import winreg
-
-    key = r"Software\Clients\StartMenuInternet"
-    with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, key, access=access) as hkey:
-        i = 0
-        while True:
-            try:
-                subkey = winreg.EnumKey(hkey, i)
-                i += 1
-            except OSError:
-                break
-            try:
-                name = winreg.QueryValue(hkey, subkey)
-                if not name or not isinstance(name, str):
+        key = r"Software\Clients\StartMenuInternet"
+        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, key, access=access) as hkey:
+            i = 0
+            while True:
+                try:
+                    subkey = winreg.EnumKey(hkey, i)
+                    i += 1
+                except OSError:
+                    break
+                try:
+                    name = winreg.QueryValue(hkey, subkey)
+                    if not name or not isinstance(name, str):
+                        name = subkey
+                except OSError:
                     name = subkey
-            except OSError:
-                name = subkey
-            try:
-                cmd = winreg.QueryValue(hkey, rf"{subkey}\shell\open\command")
-                cmd = cmd.strip('"')
-                os.stat(cmd)
-            except (OSError, AttributeError, TypeError, ValueError):
-                continue
-            info = dict(path=cmd, display_name=name, version=get_file_version(cmd))
-            yield WINDOWS_REGISTRY_BROWSER_NAMES.get(name, "unknown"), info
+                try:
+                    cmd = winreg.QueryValue(hkey, rf"{subkey}\shell\open\command")
+                    cmd = cmd.strip('"')
+                    os.stat(cmd)
+                except (OSError, AttributeError, TypeError, ValueError):
+                    continue
+                info = dict(path=cmd, display_name=name, version=get_file_version(cmd))
+                yield WINDOWS_REGISTRY_BROWSER_NAMES.get(name, "unknown"), info
 
 
-def get_file_version(path: str) -> str:
-    if sys.platform != "win32":
-        return ""
+def get_file_version(path: str) -> Optional[str]:
+    if sys.platform == "win32":
+        import win32api
 
-    import win32api
-
-    info = win32api.GetFileVersionInfo(path, "\\")
-    ms = info["FileVersionMS"]
-    ls = info["FileVersionLS"]
-    return ".".join(map(str, (win32api.HIWORD(ms), win32api.LOWORD(ms), win32api.HIWORD(ls), win32api.LOWORD(ls))))
+        info = win32api.GetFileVersionInfo(path, "\\")
+        ms = info["FileVersionMS"]
+        ls = info["FileVersionLS"]
+        return ".".join(map(str, (win32api.HIWORD(ms), win32api.LOWORD(ms), win32api.HIWORD(ls), win32api.LOWORD(ls))))
+    return None
 
 
 def get(browser: str) -> Optional[Dict]:
