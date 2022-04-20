@@ -141,7 +141,7 @@ def get_file_version(path: str) -> str:
     info = win32api.GetFileVersionInfo(path, "\\")
     ms = info["FileVersionMS"]
     ls = info["FileVersionLS"]
-    return ".".join((win32api.HIWORD(ms), win32api.LOWORD(ms), win32api.HIWORD(ls), win32api.LOWORD(ls)))
+    return ".".join(map(str, (win32api.HIWORD(ms), win32api.LOWORD(ms), win32api.HIWORD(ls), win32api.LOWORD(ls))))
 
 
 def get(browser: str) -> Optional[Dict]:
