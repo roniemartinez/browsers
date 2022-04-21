@@ -174,7 +174,10 @@ def _launch(browser: str, path: str, url: str, args: Sequence[str]) -> None:  # 
     url_arg = [] if browser == "firefox" else [url]
     if browser == "firefox":
         args = ("-new-tab", url, *args)
-    command = [*shlex.split(path), *url_arg, "--args", *args]
+    if sys.platform == "win32":
+        command = [path, *url_arg, "--args", *args]
+    else:
+        command = [*shlex.split(path), *url_arg, "--args", *args]
     if sys.platform == "darwin":
         command = ["open", "--wait-apps", "--new", "--fresh", "-a", *command]
     subprocess.Popen(command)
