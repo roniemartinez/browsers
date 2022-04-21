@@ -53,10 +53,20 @@ XDG_DATA_LOCATIONS = (
 
 WINDOWS_REGISTRY_BROWSER_NAMES = {
     "Google Chrome": "chrome",
+    "Google Chrome Canary": "chrome-canary",
     "Mozilla Firefox": "firefox",
+    "Firefox Developer Edition": "firefox-developer",
+    "Firefox Nightly": "firefox-nightly",
+    "Opera Stable": "opera",
+    "Opera beta": "opera-beta",
+    "Opera developer": "opera-developer",
     "Microsoft Edge": "msedge",
+    "Microsoft Edge Beta": "msedge-beta",
+    "Microsoft Edge Dev": "msedge-dev",
     "Internet Explorer": "msie",
-    # TODO: Add more browsers
+    "Brave": "brave",
+    "Brave Beta": "brave-beta",
+    "Brave Nightly": "brave-nightly",
 }
 
 
@@ -82,8 +92,9 @@ def get_available_browsers() -> Iterator[Tuple[str, Dict]]:
     elif sys.platform == "win32":
         import winreg
 
-        yield from get_browsers_from_registry(winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
-        yield from get_browsers_from_registry(winreg.KEY_READ | winreg.KEY_WOW64_32KEY)
+        yield from get_browsers_from_registry(winreg.HKEY_CURRENT_USER, winreg.KEY_READ)
+        yield from get_browsers_from_registry(winreg.HKEY_LOCAL_MACHINE, winreg.KEY_READ | winreg.KEY_WOW64_64KEY)
+        yield from get_browsers_from_registry(winreg.HKEY_LOCAL_MACHINE, winreg.KEY_READ | winreg.KEY_WOW64_32KEY)
     elif sys.platform == "darwin":
         for browser, bundle_id, version_string in OSX_BROWSER_BUNDLE_LIST:
             paths = subprocess.getoutput(f'mdfind "kMDItemCFBundleIdentifier == {bundle_id}"').splitlines()
@@ -101,12 +112,12 @@ def get_available_browsers() -> Iterator[Tuple[str, Dict]]:
         )
 
 
-def get_browsers_from_registry(access: int) -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
+def get_browsers_from_registry(tree: int, access: int) -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
     if sys.platform == "win32":
         import winreg
 
         key = r"Software\Clients\StartMenuInternet"
-        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, key, access=access) as hkey:
+        with winreg.OpenKey(tree, key, access=access) as hkey:
             i = 0
             while True:
                 try:
