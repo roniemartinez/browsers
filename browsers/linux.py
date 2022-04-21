@@ -25,22 +25,21 @@ XDG_DATA_LOCATIONS = (
 )
 
 
-def browsers() -> Iterator[Tuple[str, Dict]]:
-    assert sys.platform == "linux"
+def browsers() -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
+    if sys.platform == "linux":
+        from xdg.DesktopEntry import DesktopEntry
 
-    from xdg.DesktopEntry import DesktopEntry
-
-    for browser, desktop_entries in LINUX_DESKTOP_ENTRY_LIST:
-        for application_dir in XDG_DATA_LOCATIONS:
-            for desktop_entry in desktop_entries:
-                path = os.path.join(application_dir, f"{desktop_entry}.desktop")
-                if not os.path.isfile(path):
-                    continue
-                entry = DesktopEntry(path)
-                executable_path = entry.getExec()
-                if executable_path.lower().endswith(" %u"):
-                    executable_path = executable_path[:-3].strip()
-                # FIXME: --version includes the name for most browsers
-                version = subprocess.getoutput(f"{executable_path} --version")
-                info = dict(path=executable_path, display_name=entry.getName(), version=version)
-                yield browser, info
+        for browser, desktop_entries in LINUX_DESKTOP_ENTRY_LIST:
+            for application_dir in XDG_DATA_LOCATIONS:
+                for desktop_entry in desktop_entries:
+                    path = os.path.join(application_dir, f"{desktop_entry}.desktop")
+                    if not os.path.isfile(path):
+                        continue
+                    entry = DesktopEntry(path)
+                    executable_path = entry.getExec()
+                    if executable_path.lower().endswith(" %u"):
+                        executable_path = executable_path[:-3].strip()
+                    # FIXME: --version includes the name for most browsers
+                    version = subprocess.getoutput(f"{executable_path} --version")
+                    info = dict(path=executable_path, display_name=entry.getName(), version=version)
+                    yield browser, info

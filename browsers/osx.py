@@ -27,7 +27,7 @@ OSX_BROWSER_BUNDLE_LIST = (
 )
 
 
-def browsers() -> Iterator[Tuple[str, Dict]]:
+def browsers() -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
     if sys.platform == "darwin":
         for browser, bundle_id, version_string in OSX_BROWSER_BUNDLE_LIST:
             paths = subprocess.getoutput(f'mdfind "kMDItemCFBundleIdentifier == {bundle_id}"').splitlines()
