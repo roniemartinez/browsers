@@ -63,6 +63,7 @@ WINDOWS_REGISTRY_BROWSER_NAMES = {
     "Microsoft Edge": "msedge",
     "Microsoft Edge Beta": "msedge-beta",
     "Microsoft Edge Dev": "msedge-dev",
+    "Microsoft Edge Canary": "msedge-canary",
     "Internet Explorer": "msie",
     "Brave": "brave",
     "Brave Beta": "brave-beta",
