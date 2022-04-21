@@ -118,28 +118,31 @@ def get_browsers_from_registry(tree: int, access: int) -> Iterator[Tuple[str, Di
         import winreg
 
         key = r"Software\Clients\StartMenuInternet"
-        with winreg.OpenKey(tree, key, access=access) as hkey:
-            i = 0
-            while True:
-                try:
-                    subkey = winreg.EnumKey(hkey, i)
-                    i += 1
-                except OSError:
-                    break
-                try:
-                    name = winreg.QueryValue(hkey, subkey)
-                    if not name or not isinstance(name, str):
+        try:
+            with winreg.OpenKey(tree, key, access=access) as hkey:
+                i = 0
+                while True:
+                    try:
+                        subkey = winreg.EnumKey(hkey, i)
+                        i += 1
+                    except OSError:
+                        break
+                    try:
+                        name = winreg.QueryValue(hkey, subkey)
+                        if not name or not isinstance(name, str):
+                            name = subkey
+                    except OSError:
                         name = subkey
-                except OSError:
-                    name = subkey
-                try:
-                    cmd = winreg.QueryValue(hkey, rf"{subkey}\shell\open\command")
-                    cmd = cmd.strip('"')
-                    os.stat(cmd)
-                except (OSError, AttributeError, TypeError, ValueError):
-                    continue
-                info = dict(path=cmd, display_name=name, version=get_file_version(cmd))
-                yield WINDOWS_REGISTRY_BROWSER_NAMES.get(name, "unknown"), info
+                    try:
+                        cmd = winreg.QueryValue(hkey, rf"{subkey}\shell\open\command")
+                        cmd = cmd.strip('"')
+                        os.stat(cmd)
+                    except (OSError, AttributeError, TypeError, ValueError):
+                        continue
+                    info = dict(path=cmd, display_name=name, version=get_file_version(cmd))
+                    yield WINDOWS_REGISTRY_BROWSER_NAMES.get(name, "unknown"), info
+        except FileNotFoundError:
+            pass
 
 
 def get_file_version(path: str) -> Optional[str]:
