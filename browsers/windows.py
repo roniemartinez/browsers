@@ -1,29 +1,25 @@
 import os
 import sys
-from collections import defaultdict
 from typing import Dict, Iterator, Optional, Tuple
 
-WINDOWS_REGISTRY_BROWSER_NAMES = defaultdict(
-    lambda: "unknown",
-    {
-        "Google Chrome": "chrome",
-        "Google Chrome Canary": "chrome-canary",
-        "Mozilla Firefox": "firefox",
-        "Firefox Developer Edition": "firefox-developer",
-        "Firefox Nightly": "firefox-nightly",
-        "Opera Stable": "opera",
-        "Opera beta": "opera-beta",
-        "Opera developer": "opera-developer",
-        "Microsoft Edge": "msedge",
-        "Microsoft Edge Beta": "msedge-beta",
-        "Microsoft Edge Dev": "msedge-dev",
-        "Microsoft Edge Canary": "msedge-canary",
-        "Internet Explorer": "msie",
-        "Brave": "brave",
-        "Brave Beta": "brave-beta",
-        "Brave Nightly": "brave-nightly",
-    },
-)
+WINDOWS_REGISTRY_BROWSER_NAMES = {
+    "Google Chrome": "chrome",
+    "Google Chrome Canary": "chrome-canary",
+    "Mozilla Firefox": "firefox",
+    "Firefox Developer Edition": "firefox-developer",
+    "Firefox Nightly": "firefox-nightly",
+    "Opera Stable": "opera",
+    "Opera beta": "opera-beta",
+    "Opera developer": "opera-developer",
+    "Microsoft Edge": "msedge",
+    "Microsoft Edge Beta": "msedge-beta",
+    "Microsoft Edge Dev": "msedge-dev",
+    "Microsoft Edge Canary": "msedge-canary",
+    "Internet Explorer": "msie",
+    "Brave": "brave",
+    "Brave Beta": "brave-beta",
+    "Brave Nightly": "brave-nightly",
+}
 
 
 def browsers() -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
@@ -61,7 +57,7 @@ def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Tuple[str,
                     except (OSError, AttributeError, TypeError, ValueError):
                         continue
                     info = dict(path=cmd, display_name=display_name, version=_get_file_version(cmd))
-                    yield WINDOWS_REGISTRY_BROWSER_NAMES.get(display_name), info
+                    yield WINDOWS_REGISTRY_BROWSER_NAMES.get(display_name, "unknown"), info
         except FileNotFoundError:
             pass
 
