@@ -41,13 +41,52 @@ pip install pybrowsers
 
 ## Usage
 
-### Python
+### Import
 
 ```python
->>> import browsers
->>> browsers.get("chrome")
-{'path': '/Applications/Google Chrome.app', 'display_name': 'Google Chrome', 'version': '100.0.4896.88'}
->>> browsers.launch("chrome", url="https://github.com/roniemartinez/browsers")
+import browsers
+```
+
+### List all installer browsers
+
+```python
+import browsers
+
+print(list(browsers.browsers()))
+# [('chrome', {'path': '/Applications/Google Chrome.app', 'display_name': 'Google Chrome', 'version': '100.0.4896.127'}), ('firefox', {'path': '/Applications/Firefox.app', 'display_name': 'Firefox', 'version': '99.0.1'}), ('safari', {'path': '/Applications/Safari.app', 'display_name': 'Safari', 'version': '15.4'}), ('opera', {'path': '/Applications/Opera.app', 'display_name': 'Opera', 'version': '85.0.4341.60'}), ('msedge', {'path': '/Applications/Microsoft Edge.app', 'display_name': 'Microsoft Edge', 'version': '100.1185.22041544'})]
+```
+
+### Get browser information
+
+```python
+import browsers
+
+print(browsers.get("chrome"))
+# {'path': '/Applications/Google Chrome.app', 'display_name': 'Google Chrome', 'version': '100.0.4896.88'}
+```
+
+### Launch browser
+
+```python
+import browsers
+
+browsers.launch("chrome")
+```
+
+### Launch browser with URL
+
+```python
+import browsers
+
+browsers.launch("chrome", url="https://github.com/roniemartinez/browsers")
+```
+
+### Launch browser with arguments
+
+```python
+import browsers
+
+browsers.launch("chrome", args=["--incognito"])
 ```
 
 ## TODO:

@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "pybrowsers"
-version = "0.1.0-alpha.5"
+version = "0.1.0"
 repository = "https://github.com/roniemartinez/browsers"
 description = "Python library for detecting and launching browsers"
 authors = ["Ronie Martinez <ronmarti18@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 classifiers = [
-    "Development Status :: 1 - Planning",
+    "Development Status :: 3 - Alpha",
     "License :: OSI Approved :: MIT License",
     "Topic :: Internet :: WWW/HTTP :: Browsers",
     "Topic :: Software Development :: Libraries :: Python Modules",
