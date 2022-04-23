@@ -73,11 +73,8 @@ def _launch(browser: str, path: str, args: Sequence[str], url: str = None) -> su
         url_arg.append(url)
 
     if sys.platform != "linux":
-        command = [path, *url_arg, "--args", *args]
+        command = [path, *url_arg, *args]
     else:
-        command = [*shlex.split(path), *url_arg, "--args", *args]
-
-    if sys.platform == "darwin":
-        command = ["open", "--wait-apps", "--new", "--fresh", "-a", *command]
+        command = [*shlex.split(path), *url_arg, *args]
 
     return subprocess.Popen(command)

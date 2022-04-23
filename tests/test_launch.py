@@ -14,7 +14,7 @@ These tests are based on what browsers exists in Github Actions virtual environm
     "chrome_path",
     (
         pytest.param(
-            "/Applications/Google Chrome.app",
+            "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
             id="osx",
             marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
         ),

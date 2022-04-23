@@ -35,7 +35,7 @@ def test_get_available_browsers(browser: str) -> None:
             "chrome",
             {
                 "display_name": "Google Chrome",
-                "path": "/Applications/Google Chrome.app",
+                "path": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
                 "version": ANY,
             },
             marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
@@ -45,7 +45,7 @@ def test_get_available_browsers(browser: str) -> None:
             "firefox",
             {
                 "display_name": "Firefox",
-                "path": "/Applications/Firefox.app",
+                "path": "/Applications/Firefox.app/Contents/MacOS/firefox",
                 "version": ANY,
             },
             marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
@@ -55,7 +55,7 @@ def test_get_available_browsers(browser: str) -> None:
             "safari",
             {
                 "display_name": "Safari",
-                "path": "/Applications/Safari.app",
+                "path": "/Applications/Safari.app/Contents/MacOS/Safari",
                 "version": ANY,
             },
             marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
@@ -65,7 +65,7 @@ def test_get_available_browsers(browser: str) -> None:
             "msedge",
             {
                 "display_name": "Microsoft Edge",
-                "path": "/Applications/Microsoft Edge.app",
+                "path": "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
                 "version": ANY,
             },
             marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
