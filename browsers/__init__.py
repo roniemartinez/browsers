@@ -47,7 +47,7 @@ def get(browser: str) -> Optional[Dict]:
     return None
 
 
-def launch(browser: str, url: str = None, args: Optional[Sequence[str]] = None) -> None:
+def launch(browser: str, url: str = None, args: Optional[Sequence[str]] = None) -> Optional[subprocess.Popen]:
     """
     Launches a web browser.
 
@@ -61,10 +61,10 @@ def launch(browser: str, url: str = None, args: Optional[Sequence[str]] = None) 
     if not b:
         logger.info("Cannot find browser '%s'", browser)
         return
-    _launch(browser, b["path"], args, url)
+    return _launch(browser, b["path"], args, url)
 
 
-def _launch(browser: str, path: str, args: Sequence[str], url: str = None) -> None:  # pragma: no cover
+def _launch(browser: str, path: str, args: Sequence[str], url: str = None) -> subprocess.Popen:  # pragma: no cover
     url_arg = []
 
     if browser == "firefox" and url is not None:
@@ -80,4 +80,4 @@ def _launch(browser: str, path: str, args: Sequence[str], url: str = None) -> No
     if sys.platform == "darwin":
         command = ["open", "--wait-apps", "--new", "--fresh", "-a", *command]
 
-    subprocess.Popen(command)
+    return subprocess.Popen(command)
