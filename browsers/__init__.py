@@ -60,7 +60,7 @@ def launch(browser: str, url: str = None, args: Optional[Sequence[str]] = None) 
     b = get(browser)
     if not b:
         logger.info("Cannot find browser '%s'", browser)
-        return
+        return None
     return _launch(browser, b["path"], args, url)
 
 
