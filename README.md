@@ -29,9 +29,13 @@
 
 Python library for detecting and launching browsers
 
-> I recently wrote a snippet for detecting installed browsers in an OSX machine in 
-> https://github.com/mitmproxy/mitmproxy/issues/5247#issuecomment-1095337723 based on https://github.com/httptoolkit/browser-launcher
-> and I thought this could be useful to other devs since I cannot seem to find an equivalent library in Python
+
+## Why?
+
+I recently wrote a snippet for detecting installed browsers in an OSX machine in 
+https://github.com/mitmproxy/mitmproxy/issues/5247#issuecomment-1095337723 based on https://github.com/httptoolkit/browser-launcher
+and I thought this could be useful to other devs since I cannot find an equivalent library of `httptoolkit/browser-launcher` in Python
+and the known `webbrowser` standard library does not support arguments.
 
 ## Installation
 
@@ -53,7 +57,7 @@ import browsers
 import browsers
 
 print(list(browsers.browsers()))
-# [('chrome', {'path': '/Applications/Google Chrome.app', 'display_name': 'Google Chrome', 'version': '100.0.4896.127'}), ('firefox', {'path': '/Applications/Firefox.app', 'display_name': 'Firefox', 'version': '99.0.1'}), ('safari', {'path': '/Applications/Safari.app', 'display_name': 'Safari', 'version': '15.4'}), ('opera', {'path': '/Applications/Opera.app', 'display_name': 'Opera', 'version': '85.0.4341.60'}), ('msedge', {'path': '/Applications/Microsoft Edge.app', 'display_name': 'Microsoft Edge', 'version': '100.1185.22041544'})]
+# [{'browser_type': 'chrome', 'path': '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', 'display_name': 'Google Chrome', 'version': '100.0.4896.127'}, {'browser_type': 'firefox', 'path': '/Applications/Firefox.app/Contents/MacOS/firefox', 'display_name': 'Firefox', 'version': '99.0.1'}, {'browser_type': 'safari', 'path': '/Applications/Safari.app/Contents/MacOS/Safari', 'display_name': 'Safari', 'version': '15.4'}, {'browser_type': 'opera', 'path': '/Applications/Opera.app/Contents/MacOS/Opera', 'display_name': 'Opera', 'version': '85.0.4341.60'}, {'browser_type': 'msedge', 'path': '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge', 'display_name': 'Microsoft Edge', 'version': '100.1185.22042050'}]
 ```
 
 ### Get browser information
@@ -62,7 +66,7 @@ print(list(browsers.browsers()))
 import browsers
 
 print(browsers.get("chrome"))
-# {'path': '/Applications/Google Chrome.app', 'display_name': 'Google Chrome', 'version': '100.0.4896.88'}
+# {'browser_type': 'chrome', 'path': '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', 'display_name': 'Google Chrome', 'version': '100.0.4896.127'}
 ```
 
 ### Launch browser
@@ -89,13 +93,31 @@ import browsers
 browsers.launch("chrome", args=["--incognito"])
 ```
 
+### Specifying version
+
+The `get()` and `launch()` functions support specifying version in case multiple versions are installed.
+Wildcard pattern is also supported.
+
+```python
+import browsers
+
+print(browsers.get("chrome", version="100.0.4896.127"))  # complete version
+# {'browser_type': 'chrome', 'path': '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', 'display_name': 'Google Chrome', 'version': '100.0.4896.127'}
+
+print(browsers.get("chrome", version="100.*"))  # wildcard
+# {'browser_type': 'chrome', 'path': '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', 'display_name': 'Google Chrome', 'version': '100.0.4896.127'}
+
+browsers.launch("chrome", version="100.0.4896.127")  # complete version
+browsers.launch("chrome", version="100.*")  # wildcard
+```
+
 ## TODO:
 
 - [x] Detect browser on OSX
 - [x] Detect browser on Linux
 - [X] Detect browser on Windows
 - [x] Launch browser with arguments
-- [ ] Get browser by version (support wildcards)
+- [x] Get browser by version (support wildcards)
 
 ## References
 

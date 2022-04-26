@@ -23,8 +23,8 @@ These tests are based on what browsers exists in Github Actions virtual environm
         pytest.param("msie", id="msie", marks=pytest.mark.skipif(sys.platform != "win32", reason="windows-only")),
     ),
 )
-def test_get_available_browsers(browser: str) -> None:
-    available_browsers = dict(browsers.browsers())
+def test_browsers(browser: str) -> None:
+    available_browsers = [b["browser_type"] for b in browsers.browsers()]
     assert browser in available_browsers
 
 
@@ -34,6 +34,7 @@ def test_get_available_browsers(browser: str) -> None:
         pytest.param(
             "chrome",
             {
+                "browser_type": "chrome",
                 "display_name": "Google Chrome",
                 "path": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
                 "version": ANY,
@@ -44,6 +45,7 @@ def test_get_available_browsers(browser: str) -> None:
         pytest.param(
             "firefox",
             {
+                "browser_type": "firefox",
                 "display_name": "Firefox",
                 "path": "/Applications/Firefox.app/Contents/MacOS/firefox",
                 "version": ANY,
@@ -54,6 +56,7 @@ def test_get_available_browsers(browser: str) -> None:
         pytest.param(
             "safari",
             {
+                "browser_type": "safari",
                 "display_name": "Safari",
                 "path": "/Applications/Safari.app",
                 "version": ANY,
@@ -64,6 +67,7 @@ def test_get_available_browsers(browser: str) -> None:
         pytest.param(
             "msedge",
             {
+                "browser_type": "msedge",
                 "display_name": "Microsoft Edge",
                 "path": "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge",
                 "version": ANY,
@@ -74,6 +78,7 @@ def test_get_available_browsers(browser: str) -> None:
         pytest.param(
             "chrome",
             {
+                "browser_type": "chrome",
                 "display_name": "Google Chrome",
                 "path": "/usr/bin/google-chrome-stable",
                 "version": ANY,
@@ -84,6 +89,7 @@ def test_get_available_browsers(browser: str) -> None:
         pytest.param(
             "firefox",
             {
+                "browser_type": "firefox",
                 "display_name": "Firefox Web Browser",
                 "path": "firefox",
                 "version": ANY,
@@ -94,6 +100,7 @@ def test_get_available_browsers(browser: str) -> None:
         pytest.param(
             "chrome",
             {
+                "browser_type": "chrome",
                 "display_name": "Google Chrome",
                 "path": r"C:\Program Files\Google\Chrome\Application\chrome.exe",
                 "version": ANY,
@@ -104,6 +111,7 @@ def test_get_available_browsers(browser: str) -> None:
         pytest.param(
             "firefox",
             {
+                "browser_type": "firefox",
                 "display_name": "Mozilla Firefox",
                 "path": r"C:\Program Files\Mozilla Firefox\firefox.exe",
                 "version": ANY,
@@ -114,6 +122,7 @@ def test_get_available_browsers(browser: str) -> None:
         pytest.param(
             "msedge",
             {
+                "browser_type": "msedge",
                 "display_name": "Microsoft Edge",
                 "path": r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
                 "version": ANY,
@@ -124,6 +133,7 @@ def test_get_available_browsers(browser: str) -> None:
         pytest.param(
             "msie",
             {
+                "browser_type": "msie",
                 "display_name": "Internet Explorer",
                 "path": r"C:\Program Files\Internet Explorer\iexplore.exe",
                 "version": ANY,

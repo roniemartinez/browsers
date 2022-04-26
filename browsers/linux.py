@@ -1,7 +1,10 @@
 import os
+import re
 import subprocess
 import sys
-from typing import Dict, Iterator, Tuple
+from typing import Iterator
+
+from .common import Browser
 
 LINUX_DESKTOP_ENTRY_LIST = (
     # desktop entry name can be "firefox.desktop" or "firefox_firefox.desktop"
@@ -24,8 +27,10 @@ XDG_DATA_LOCATIONS = (
     "/var/lib/snapd/desktop/applications",
 )
 
+VERSION_PATTERN = re.compile(r"\b(\S+\.\S+)\b")  # simple pattern assuming all version strings have a dot on them
 
-def browsers() -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
+
+def browsers() -> Iterator[Browser]:  # type: ignore[return]
     if sys.platform == "linux":
         from xdg.DesktopEntry import DesktopEntry
 
@@ -39,7 +44,10 @@ def browsers() -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
                     executable_path = entry.getExec()
                     if executable_path.lower().endswith(" %u"):
                         executable_path = executable_path[:-3].strip()
-                    # FIXME: --version includes the name for most browsers
-                    version = subprocess.getoutput(f"{executable_path} --version")
-                    info = dict(path=executable_path, display_name=entry.getName(), version=version)
-                    yield browser, info
+                    version = subprocess.getoutput(f"{executable_path} --version 2>&1").strip()
+                    match = VERSION_PATTERN.search(version)
+                    if match:
+                        version = match[0]
+                    yield Browser(
+                        browser_type=browser, path=executable_path, display_name=entry.getName(), version=version
+                    )

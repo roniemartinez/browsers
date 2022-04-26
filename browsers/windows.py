@@ -1,6 +1,8 @@
 import os
 import sys
-from typing import Dict, Iterator, Optional, Tuple
+from typing import Iterator
+
+from .common import Browser
 
 WINDOWS_REGISTRY_BROWSER_NAMES = {
     "Google Chrome": "chrome",
@@ -22,7 +24,7 @@ WINDOWS_REGISTRY_BROWSER_NAMES = {
 }
 
 
-def browsers() -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
+def browsers() -> Iterator[Browser]:  # type: ignore[return]
     if sys.platform == "win32":
         import winreg
 
@@ -31,7 +33,7 @@ def browsers() -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
         yield from _win32_browsers_from_registry(winreg.HKEY_LOCAL_MACHINE, winreg.KEY_READ | winreg.KEY_WOW64_32KEY)
 
 
-def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
+def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Browser]:  # type: ignore[return]
     if sys.platform == "win32":
         import winreg
 
@@ -54,15 +56,19 @@ def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Tuple[str,
                         cmd = winreg.QueryValue(hkey, rf"{subkey}\shell\open\command")
                         cmd = cmd.strip('"')
                         os.stat(cmd)
-                    except (OSError, AttributeError, TypeError, ValueError):
+                    except (OSError, AttributeError, TypeError, ValueError):  # pragma: no cover
                         continue
-                    info = dict(path=cmd, display_name=display_name, version=_get_file_version(cmd))
-                    yield WINDOWS_REGISTRY_BROWSER_NAMES.get(display_name, "unknown"), info
+                    yield Browser(
+                        browser_type=WINDOWS_REGISTRY_BROWSER_NAMES.get(display_name, "unknown"),
+                        path=cmd,
+                        display_name=display_name,
+                        version=_get_file_version(cmd),
+                    )
         except FileNotFoundError:
             pass
 
 
-def _get_file_version(path: str) -> Optional[str]:
+def _get_file_version(path: str) -> str:
     import win32api
 
     info = win32api.GetFileVersionInfo(path, "\\")
