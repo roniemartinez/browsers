@@ -1,6 +1,6 @@
 import os
 import sys
-from typing import Iterator, Optional
+from typing import Iterator
 
 from .common import Browser
 
