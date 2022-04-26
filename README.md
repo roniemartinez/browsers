@@ -43,6 +43,14 @@ and the known `webbrowser` standard library does not support arguments.
 pip install pybrowsers
 ```
 
+## Features
+
+- Detect browser on OSX
+- Detect browser on Linux
+- Detect browser on Windows
+- Launch browser with arguments
+- Launch and get browser by version with wildcard support
+
 ## Usage
 
 ### Import
@@ -110,14 +118,6 @@ print(browsers.get("chrome", version="100.*"))  # wildcard
 browsers.launch("chrome", version="100.0.4896.127")  # complete version
 browsers.launch("chrome", version="100.*")  # wildcard
 ```
-
-## TODO:
-
-- [x] Detect browser on OSX
-- [x] Detect browser on Linux
-- [X] Detect browser on Windows
-- [x] Launch browser with arguments
-- [x] Get browser by version (support wildcards)
 
 ## References
 

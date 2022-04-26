@@ -48,9 +48,9 @@ def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Browser]: 
                         break
                     try:
                         display_name = winreg.QueryValue(hkey, subkey)
-                        if not display_name or not isinstance(display_name, str):
+                        if not display_name or not isinstance(display_name, str):  # pragma: no cover
                             display_name = subkey
-                    except OSError:
+                    except OSError:  # pragma: no cover
                         display_name = subkey
                     try:
                         cmd = winreg.QueryValue(hkey, rf"{subkey}\shell\open\command")

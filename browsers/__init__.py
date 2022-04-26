@@ -8,7 +8,7 @@ from typing import Iterator, Optional, Sequence
 from . import linux, osx, windows
 from .common import Browser
 
-__all__ = ["browsers", "get", "launch"]
+__all__ = ["Browser", "browsers", "get", "launch"]
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
