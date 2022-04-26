@@ -72,7 +72,11 @@ def _launch(browser: str, path: str, args: Sequence[str], url: str = None) -> su
     elif url is not None:
         url_arg.append(url)
 
-    if sys.platform != "linux":
+    if browser == "safari":
+        if args:
+            logger.warning("Safari does not accept command line arguments. %s will be ignored.", str(args))
+        command = ["open", "--wait-apps", "--new", "--fresh", "-a", path, *url_arg]
+    elif sys.platform != "linux":
         command = [path, *url_arg, *args]
     else:
         command = [*shlex.split(path), *url_arg, *args]

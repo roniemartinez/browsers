@@ -55,7 +55,7 @@ def test_get_available_browsers(browser: str) -> None:
             "safari",
             {
                 "display_name": "Safari",
-                "path": "/Applications/Safari.app/Contents/MacOS/Safari",
+                "path": "/Applications/Safari.app",
                 "version": ANY,
             },
             marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only"),
