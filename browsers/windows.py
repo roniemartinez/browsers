@@ -56,7 +56,7 @@ def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Browser]: 
                         cmd = winreg.QueryValue(hkey, rf"{subkey}\shell\open\command")
                         cmd = cmd.strip('"')
                         os.stat(cmd)
-                    except (OSError, AttributeError, TypeError, ValueError):
+                    except (OSError, AttributeError, TypeError, ValueError):  # pragma: no cover
                         continue
                     yield Browser(
                         browser_type=WINDOWS_REGISTRY_BROWSER_NAMES.get(display_name, "unknown"),
