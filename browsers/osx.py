@@ -2,7 +2,9 @@ import os
 import plistlib
 import subprocess
 import sys
-from typing import Dict, Iterator, Tuple
+from typing import Iterator
+
+from .common import Browser
 
 OSX_BROWSER_BUNDLE_LIST = (
     # browser name, bundle ID, version string
@@ -27,7 +29,7 @@ OSX_BROWSER_BUNDLE_LIST = (
 )
 
 
-def browsers() -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
+def browsers() -> Iterator[Browser]:  # type: ignore[return]
     if sys.platform == "darwin":
         for browser, bundle_id, version_string in OSX_BROWSER_BUNDLE_LIST:
             paths = subprocess.getoutput(f'mdfind "kMDItemCFBundleIdentifier == {bundle_id}"').splitlines()
@@ -38,6 +40,9 @@ def browsers() -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
                     executable = os.path.join(path, "Contents/MacOS", executable_name)
                     display_name = plist.get("CFBundleDisplayName") or plist.get("CFBundleName", browser)
                     version = plist[version_string]
-                    yield browser, dict(
-                        path=executable if browser != "safari" else path, display_name=display_name, version=version
+                    yield Browser(
+                        browser_type=browser,
+                        path=executable if browser != "safari" else path,
+                        display_name=display_name,
+                        version=version,
                     )

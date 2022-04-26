@@ -1,10 +1,12 @@
+import fnmatch
 import logging
 import shlex
 import subprocess
 import sys
-from typing import Dict, Iterator, Optional, Sequence, Tuple
+from typing import Iterator, Optional, Sequence
 
 from . import linux, osx, windows
+from .common import Browser
 
 __all__ = ["browsers", "get", "launch"]
 
@@ -12,7 +14,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(asctime)s %
 logger = logging.getLogger(__name__)
 
 
-def browsers() -> Iterator[Tuple[str, Dict]]:
+def browsers() -> Iterator[Browser]:
     """
     Iterates over installed browsers.
 
@@ -32,32 +34,36 @@ def browsers() -> Iterator[Tuple[str, Dict]]:
         )
 
 
-def get(browser: str) -> Optional[Dict]:
+def get(browser: str, version: str = "*") -> Optional[Browser]:
     """
     Returns the information for the provided browser key.
 
     :param browser: Any of "chrome", "chrome-canary", "firefox", "firefox-developer", "firefox-nightly", "opera",
                     "opera-beta", "opera-developer", "msedge", "msedge-beta", "msedge-dev", "msedge-canary", "msie",
                     "brave", "brave-beta", "brave-dev", "brave-nightly", and "safari".
+    :param version: Version string (supports wildcard, e.g. 100.*)
     :return: Dictionary containing "path", "display_name" and "version".
     """
-    for key, value in browsers():
-        if key == browser:
-            return value
+    for b in browsers():
+        if b["browser_type"] == browser and fnmatch.fnmatch(b["version"], version):
+            return b
     return None
 
 
-def launch(browser: str, url: str = None, args: Optional[Sequence[str]] = None) -> Optional[subprocess.Popen]:
+def launch(
+    browser: str, version: str = "*", url: str = None, args: Optional[Sequence[str]] = None
+) -> Optional[subprocess.Popen]:
     """
     Launches a web browser.
 
     :param browser: Browser key.
+    :param version: Version string (supports wildcard, e.g. 100.*)
     :param url: URL.
     :param args: Arguments to be passed to the browser.
     """
     if args is None:
         args = []
-    b = get(browser)
+    b = get(browser, version)
     if not b:
         logger.info("Cannot find browser '%s'", browser)
         return None
