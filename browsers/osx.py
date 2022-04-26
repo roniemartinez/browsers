@@ -38,4 +38,6 @@ def browsers() -> Iterator[Tuple[str, Dict]]:  # type: ignore[return]
                     executable = os.path.join(path, "Contents/MacOS", executable_name)
                     display_name = plist.get("CFBundleDisplayName") or plist.get("CFBundleName", browser)
                     version = plist[version_string]
-                    yield browser, dict(path=executable, display_name=display_name, version=version)
+                    yield browser, dict(
+                        path=executable if browser != "safari" else path, display_name=display_name, version=version
+                    )
