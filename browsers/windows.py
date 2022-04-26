@@ -68,7 +68,7 @@ def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Browser]: 
             pass
 
 
-def _get_file_version(path: str) -> Optional[str]:
+def _get_file_version(path: str) -> str:
     import win32api
 
     info = win32api.GetFileVersionInfo(path, "\\")
