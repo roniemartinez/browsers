@@ -44,7 +44,7 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                     executable_path = entry.getExec()
                     if executable_path.lower().endswith(" %u"):
                         executable_path = executable_path[:-3].strip()
-                    version = subprocess.check_output([executable_path, "--version"]).decode().strip()
+                    version = subprocess.check_output([executable_path, "--version", "2>&1"]).decode().strip()
                     match = VERSION_PATTERN.search(version)
                     if match:
                         version = match[0]
