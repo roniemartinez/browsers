@@ -1,0 +1,27 @@
+{
+  "projectName": "browsers",
+  "projectOwner": "roniemartinez",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "roniemartinez",
+      "name": "Ronie Martinez",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2573537?v=4",
+      "profile": "https://ron.sh/",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc",
+        "maintenance"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+  "skipCi": false
+}
