@@ -20,8 +20,18 @@
         "doc",
         "maintenance"
       ]
+    },
+    {
+      "login": "SergeyPirogov",
+      "name": "Sergey Pirogov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4622856?v=4",
+      "profile": "https://t.me/automation_remarks_ua",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": false
+  "skipCi": false,
+  "commitConvention": "none"
 }
