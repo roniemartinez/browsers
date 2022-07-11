@@ -7,6 +7,7 @@ from .common import Browser
 WINDOWS_REGISTRY_BROWSER_NAMES = {
     "Google Chrome": "chrome",
     "Google Chrome Canary": "chrome-canary",
+    "Chromium": "chromium",
     "Mozilla Firefox": "firefox",
     "Firefox Developer Edition": "firefox-developer",
     "Firefox Nightly": "firefox-nightly",
