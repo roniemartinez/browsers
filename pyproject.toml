@@ -32,7 +32,7 @@ pyxdg = { version = ">=0.27,<0.29", markers = "sys_platform == 'linux'" }
 pywin32 = { version = ">=303,<305", markers = "sys_platform == 'win32'" }
 
 [tool.poetry.dev-dependencies]
-autoflake = "^1.5.1"
+autoflake = "^1.5.2"
 black = "^22.6"
 isort = "^5.10.1"
 mypy = "^0.971"
