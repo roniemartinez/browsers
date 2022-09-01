@@ -33,7 +33,7 @@ pywin32 = { version = ">=303,<305", markers = "sys_platform == 'win32'" }
 
 [tool.poetry.dev-dependencies]
 autoflake = "^1.5.2"
-black = "^22.6"
+black = "^22.8"
 isort = "^5.10.1"
 mypy = "^0.971"
 pyproject-flake8 = "^0.0.1a3"
