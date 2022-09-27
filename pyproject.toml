@@ -35,7 +35,7 @@ pywin32 = { version = ">=303,<305", markers = "sys_platform == 'win32'" }
 autoflake = "^1.6.1"
 black = "^22.8"
 isort = "^5.10.1"
-mypy = "^0.971"
+mypy = "^0.981"
 pyproject-flake8 = "^5.0.4"
 pytest = "^7.1.3"
 pytest-clarity = "^1.0.1"
