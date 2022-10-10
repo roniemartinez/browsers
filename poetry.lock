@@ -14,7 +14,7 @@ tests_no_zope = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy"
 
 [[package]]
 name = "autoflake"
-version = "1.7.0"
+version = "1.7.1"
 description = "Removes unused imports and unused variables"
 category = "dev"
 optional = false
@@ -408,7 +408,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "6dae0b847eba7c4351ad81b92779cad0b708863006e0e6be89d8beadbdbebaae"
+content-hash = "eb4f1bef66ad1d9b438c110246d2246e22c0d1faffbe3938891e64026add32c5"
 
 [metadata.files]
 attrs = [
@@ -416,8 +416,8 @@ attrs = [
     {file = "attrs-21.4.0.tar.gz", hash = "sha256:626ba8234211db98e869df76230a137c4c40a12d72445c45d5f5b716f076e2fd"},
 ]
 autoflake = [
-    {file = "autoflake-1.7.0-py2.py3-none-any.whl", hash = "sha256:cb46baf67d7114302cf66363f384d34704508828f1606a42a267957531f2bab3"},
-    {file = "autoflake-1.7.0.tar.gz", hash = "sha256:ac2f7d61cd54e675319fc67ce4a9b4ba69cb054af9ae4e8e565cfcb57ba15c6a"},
+    {file = "autoflake-1.7.1-py2.py3-none-any.whl", hash = "sha256:b759b1aee50526cc169a812a9a0de49b808c3de6be7166690e93bb36a7f23c98"},
+    {file = "autoflake-1.7.1.tar.gz", hash = "sha256:e7eddc1a5759d8f2cab5880f5777bf8a342db16d82a2ebbed2969a6bd74da0a2"},
 ]
 black = [
     {file = "black-22.10.0-1fixedarch-cp310-cp310-macosx_11_0_x86_64.whl", hash = "sha256:5cc42ca67989e9c3cf859e84c2bf014f6633db63d1cbdf8fdb666dcd9e77e3fa"},
