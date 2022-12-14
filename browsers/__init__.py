@@ -51,7 +51,7 @@ def get(browser: str, version: str = "*") -> Optional[Browser]:
 
 
 def launch(
-    browser: str, version: str = "*", url: str = None, args: Optional[Sequence[str]] = None
+    browser: str, version: str = "*", url: Optional[str] = None, args: Optional[Sequence[str]] = None
 ) -> Optional[subprocess.Popen]:
     """
     Launches a web browser.
@@ -70,7 +70,9 @@ def launch(
     return _launch(browser, b["path"], args, url)
 
 
-def _launch(browser: str, path: str, args: Sequence[str], url: str = None) -> subprocess.Popen:  # pragma: no cover
+def _launch(
+    browser: str, path: str, args: Sequence[str], url: Optional[str] = None
+) -> subprocess.Popen:  # pragma: no cover
     url_arg = []
 
     if browser == "firefox" and url is not None:
