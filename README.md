@@ -7,7 +7,7 @@
     </tr>
     <tr>
         <td>Github Actions</td>
-        <td><img src='https://img.shields.io/github/workflow/status/roniemartinez/browsers/Python?label=actions&logo=github%20actions&style=for-the-badge' alt="Github Actions"></td>
+        <td><img src='https://img.shields.io/github/actions/workflow/status/roniemartinez/browsers/python.yml?branch=master&label=actions&logo=github%20actions&style=for-the-badge' alt="Github Actions"></td>
         <td>Coverage</td>
         <td><img src='https://img.shields.io/codecov/c/github/roniemartinez/browsers/branch?label=codecov&logo=codecov&style=for-the-badge' alt="CodeCov"></td>
     </tr>
