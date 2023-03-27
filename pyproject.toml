@@ -30,7 +30,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7"
 pyxdg = { version = ">=0.27,<0.29", markers = "sys_platform == 'linux'" }
-pywin32 = { version = ">=303,<306", markers = "sys_platform == 'win32'" }
+pywin32 = { version = ">=303,<307", markers = "sys_platform == 'win32'" }
 
 [tool.poetry.dev-dependencies]
 autoflake = "^1.7.8"
