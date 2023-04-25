@@ -63,7 +63,7 @@ pip install pybrowsers
 import browsers
 ```
 
-### List all installer browsers
+### List all installed browsers
 
 ```python
 import browsers
