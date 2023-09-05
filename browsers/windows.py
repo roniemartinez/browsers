@@ -49,6 +49,7 @@ def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Browser]: 
                         break
                     try:
                         display_name = winreg.QueryValue(hkey, subkey)
+                        print(display_name)
                         if not display_name or not isinstance(display_name, str):  # pragma: no cover
                             display_name = subkey
                     except OSError:  # pragma: no cover
