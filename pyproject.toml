@@ -39,7 +39,7 @@ mypy = "^1.4"
 pyproject-flake8 = "^6.1.0"
 pytest = "^8.0.2"
 pytest-clarity = "^1.0.1"
-pytest-cov = "^4.1.0"
+pytest-cov = ">=4.1,<6.0"
 
 [tool.isort]
 line_length = 120
