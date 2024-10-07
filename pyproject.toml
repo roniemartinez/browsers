@@ -28,7 +28,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.8.1"
-pywin32 = { version = ">=303,<307", markers = "sys_platform == 'win32'" }
+pywin32 = { version = ">=303,<308", markers = "sys_platform == 'win32'" }
 pyxdg = { version = ">=0.27,<0.29", markers = "sys_platform == 'linux'" }
 
 [tool.poetry.group.dev.dependencies]
