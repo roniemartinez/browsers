@@ -49,15 +49,16 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                         version=version,
                     )
 
+
 def _reverse_brave_version(brave_version: str) -> str:
     # Reverse the version string manipulation done by Brave
     # https://github.com/brave/brave-core/blob/master/build/mac/tweak_info_plist.py#L46-L58
-    brave_parts = brave_version.split('.')
+    brave_parts = brave_version.split(".")
     brave_minor = int(brave_parts[0])
     patch = brave_parts[1]
-    
+
     major = brave_minor // 100
     minor = brave_minor % 100
-    
+
     original_version = f"{major}.{minor}.{patch}"
     return original_version
