@@ -57,8 +57,10 @@ def _reverse_brave_version(brave_version: str) -> str:
 
     >>> _reverse_brave_version("175.181")
     '1.75.181'
+    >>> _reverse_brave_version("100.1.2")
+    '1.0.1.2'
     """
-    major_minor, patch = brave_version.split(".", 2)
+    major_minor, patch = brave_version.split(".", 1)
     major, minor = divmod(int(major_minor), 100)
 
     return f"{major}.{minor}.{patch}"
