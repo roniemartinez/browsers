@@ -29,9 +29,19 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "vanderboon",
+      "name": "vanderboon",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90931?v=4",
+      "profile": "https://github.com/vanderboon",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "skipCi": false,
-  "commitConvention": "none"
+  "commitConvention": "none",
+  "commitType": "docs"
 }
