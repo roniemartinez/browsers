@@ -8,8 +8,8 @@ from .common import Browser
 
 OSX_BROWSER_BUNDLE_LIST = (
     # browser name, bundle ID, version string
-    ("chrome", "com.google.Chrome", "KSVersion"),
-    ("chrome-canary", "com.google.Chrome.canary", "KSVersion"),
+    ("chrome", "com.google.Chrome", "CFBundleShortVersionString"),
+    ("chrome-canary", "com.google.Chrome.canary", "CFBundleShortVersionString"),
     ("chromium", "org.chromium.Chromium", "CFBundleShortVersionString"),
     ("firefox", "org.mozilla.firefox", "CFBundleShortVersionString"),
     ("firefox-developer", "org.mozilla.firefoxdeveloperedition", "CFBundleShortVersionString"),
@@ -40,9 +40,24 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                     executable = os.path.join(path, "Contents/MacOS", executable_name)
                     display_name = plist.get("CFBundleDisplayName") or plist.get("CFBundleName", browser)
                     version = plist[version_string]
+                    if browser.startswith("brave"):
+                        version = _reverse_brave_version(version)
                     yield Browser(
                         browser_type=browser,
                         path=executable if browser != "safari" else path,
                         display_name=display_name,
                         version=version,
                     )
+
+def _reverse_brave_version(brave_version: str) -> str:
+    # Reverse the version string manipulation done by Brave
+    # https://github.com/brave/brave-core/blob/master/build/mac/tweak_info_plist.py#L46-L58
+    brave_parts = brave_version.split('.')
+    brave_minor = int(brave_parts[0])
+    patch = brave_parts[1]
+    
+    major = brave_minor // 100
+    minor = brave_minor % 100
+    
+    original_version = f"{major}.{minor}.{patch}"
+    return original_version
