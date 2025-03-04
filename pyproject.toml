@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pybrowsers"
-version = "0.6.0"
+version = "0.7.0"
 repository = "https://github.com/roniemartinez/browsers"
 description = "Python library for detecting and launching browsers"
 authors = ["Ronie Martinez <ronmarti18@gmail.com>"]
@@ -12,10 +12,11 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP :: Browsers",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 packages = [
@@ -27,7 +28,7 @@ packages = [
 
 
 [tool.poetry.dependencies]
-python = "^3.8.1"
+python = "^3.9"
 pywin32 = { version = ">=303,<309", markers = "sys_platform == 'win32'" }
 pyxdg = { version = ">=0.27,<0.29", markers = "sys_platform == 'linux'" }
 
@@ -83,6 +84,7 @@ addopts = """\
     --cov-report=term-missing \
     --cov-report=xml \
     --cov-report=html \
+    --doctest-modules \
     -vv \
     -x \
     -s \
