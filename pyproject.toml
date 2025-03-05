@@ -34,7 +34,7 @@ pyxdg = { version = ">=0.27,<0.29", markers = "sys_platform == 'linux'" }
 
 [tool.poetry.group.dev.dependencies]
 autoflake = "^2.3.0"
-black = "^24.2.0"
+black = ">=24.2,<26.0"
 isort = ">=5.11.5,<7.0.0"
 mypy = "^1.4"
 pyproject-flake8 = ">=6.1,<8.0"
