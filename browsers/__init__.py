@@ -68,6 +68,7 @@ def launch(
         return _launch(browser, b["path"], args, url)
 
     logger.info("Cannot find browser '%s'", browser)
+    return None
 
 
 def _launch(
