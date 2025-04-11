@@ -40,8 +40,10 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                     executable = os.path.join(path, "Contents/MacOS", executable_name)
                     display_name = plist.get("CFBundleDisplayName") or plist.get("CFBundleName", browser)
                     version = plist[version_string]
+
                     if browser.startswith("brave"):
                         version = _reverse_brave_version(version)
+
                     yield Browser(
                         browser_type=browser,
                         path=executable if browser != "safari" else path,
@@ -50,7 +52,7 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                     )
 
 
-def _reverse_brave_version(brave_version: str) -> str:
+def _reverse_brave_version(version: str) -> str:
     """
     Reverse the version string manipulation done by Brave
     https://github.com/brave/brave-core/blob/master/build/mac/tweak_info_plist.py#L46-L58
@@ -60,7 +62,7 @@ def _reverse_brave_version(brave_version: str) -> str:
     >>> _reverse_brave_version("100.1.2")
     '1.0.1.2'
     """
-    major_minor, patch = brave_version.split(".", 1)
+    major_minor, patch = version.split(".", 1)
     major, minor = divmod(int(major_minor), 100)
 
     return f"{major}.{minor}.{patch}"

@@ -63,11 +63,11 @@ def launch(
     """
     if args is None:
         args = []
-    b = get(browser, version)
-    if not b:
-        logger.info("Cannot find browser '%s'", browser)
-        return None
-    return _launch(browser, b["path"], args, url)
+
+    if b:= get(browser, version):
+        return _launch(browser, b["path"], args, url)
+
+    logger.info("Cannot find browser '%s'", browser)
 
 
 def _launch(

@@ -1,3 +1,4 @@
+import contextlib
 import os
 import sys
 from typing import Iterator
@@ -38,7 +39,7 @@ def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Browser]: 
     if sys.platform == "win32":
         import winreg
 
-        try:
+        with contextlib.suppress(FileNotFoundError):
             with winreg.OpenKey(tree, r"Software\Clients\StartMenuInternet", access=access) as hkey:
                 i = 0
                 while True:
@@ -47,26 +48,27 @@ def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Browser]: 
                         i += 1
                     except OSError:
                         break
+
                     try:
                         display_name = winreg.QueryValue(hkey, subkey)
                         if not display_name or not isinstance(display_name, str):  # pragma: no cover
                             display_name = subkey
                     except OSError:  # pragma: no cover
                         display_name = subkey
+
                     try:
                         cmd = winreg.QueryValue(hkey, rf"{subkey}\shell\open\command")
                         cmd = cmd.strip('"')
                         os.stat(cmd)
                     except (OSError, AttributeError, TypeError, ValueError):  # pragma: no cover
                         continue
+
                     yield Browser(
                         browser_type=WINDOWS_REGISTRY_BROWSER_NAMES.get(display_name, "unknown"),
                         path=cmd,
                         display_name=display_name,
                         version=_get_file_version(cmd),
                     )
-        except FileNotFoundError:
-            pass
 
 
 def _get_file_version(path: str) -> str:
