@@ -38,16 +38,20 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
             for application_dir in XDG_DATA_LOCATIONS:
                 for desktop_entry in desktop_entries:
                     path = os.path.join(application_dir, f"{desktop_entry}.desktop")
+
                     if not os.path.isfile(path):
                         continue
+
                     entry = DesktopEntry(path)
                     executable_path = entry.getExec()
+
                     if executable_path.lower().endswith(" %u"):
                         executable_path = executable_path[:-3].strip()
+
                     version = subprocess.getoutput(f"{executable_path} --version 2>&1").strip()
-                    match = VERSION_PATTERN.search(version)
-                    if match:
+                    if match := VERSION_PATTERN.search(version):
                         version = match[0]
+
                     yield Browser(
                         browser_type=browser, path=executable_path, display_name=entry.getName(), version=version
                     )

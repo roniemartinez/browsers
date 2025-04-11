@@ -1,10 +1,11 @@
-[tool.poetry]
+[project]
 name = "pybrowsers"
-version = "0.7.0"
-repository = "https://github.com/roniemartinez/browsers"
+version = "0.8.0"
 description = "Python library for detecting and launching browsers"
-authors = ["Ronie Martinez <ronmarti18@gmail.com>"]
-license = "MIT"
+authors = [
+    { name = "Ronie Martinez", email = "ronmarti18@gmail.com" }
+]
+license = { text = "MIT" }
 readme = "README.md"
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -19,28 +20,30 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
+requires-python = ">=3.9"
+dependencies = [
+    "pywin32 (>=303,<311) ; sys_platform == 'win32'",
+    "pyxdg (>=0.27,<0.29) ; sys_platform == 'linux'"
+]
+
+[project.urls]
+repository = "https://github.com/roniemartinez/browsers"
+"Donate" = "https://github.com/sponsors/roniemartinez"
+
+[tool.poetry]
 packages = [
     { include = "browsers" },
 ]
 
-[tool.poetry.urls]
-"Donate" = "https://github.com/sponsors/roniemartinez"
-
-
-[tool.poetry.dependencies]
-python = "^3.9"
-pywin32 = { version = ">=303,<311", markers = "sys_platform == 'win32'" }
-pyxdg = { version = ">=0.27,<0.29", markers = "sys_platform == 'linux'" }
-
 [tool.poetry.group.dev.dependencies]
-autoflake = "^2.3.0"
-black = ">=24.2,<26.0"
-isort = ">=5.11.5,<7.0.0"
-mypy = "^1.4"
-pyproject-flake8 = ">=6.1,<8.0"
-pytest = "^8.0.2"
+autoflake = "^2.3.1"
+black = "^25.1.0"
+isort = "^6.0.1"
+mypy = "^1.15.0"
+pyproject-flake8 = "^7.0.0"
+pytest = "^8.3.5"
 pytest-clarity = "^1.0.1"
-pytest-cov = ">=4.1,<7.0"
+pytest-cov = "^6.1.1"
 
 [tool.isort]
 line_length = 120
@@ -91,5 +94,5 @@ addopts = """\
 """
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
