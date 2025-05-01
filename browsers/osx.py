@@ -68,8 +68,8 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                 yield _get_browser_info(app_dir, browser, plist, version_string)
 
 
-def _get_browser_info(app_dir: str, browser: str, plist: dict, version_string: str):
-    executable_name = plist.get("CFBundleExecutable")
+def _get_browser_info(app_dir: str, browser: str, plist: dict, version_string: str) -> Browser:
+    executable_name = plist["CFBundleExecutable"]
     executable = os.path.join(app_dir, "Contents/MacOS", executable_name)
     display_name = plist.get("CFBundleDisplayName") or plist.get("CFBundleName", browser)
     version = plist[version_string]

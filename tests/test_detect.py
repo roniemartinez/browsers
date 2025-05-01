@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 import unittest.mock
-from typing import Dict
+from typing import Any
 from unittest.mock import ANY
 
 import pytest
@@ -173,9 +173,9 @@ def test_browsers(browser: str) -> None:
         ),
     ),
 )
-def test_get(naive: bool, browser: str, details: Dict) -> None:
+def test_get(naive: bool, browser: str, details: dict) -> None:
     # if naive, mock subprocess.getoutput else just wrap it
-    kwargs = {"return_value": ""} if naive else ({"wraps": subprocess.getoutput})
+    kwargs: dict[str, Any] = {"return_value": ""} if naive else ({"wraps": subprocess.getoutput})
 
     with unittest.mock.patch("subprocess.getoutput", **kwargs):
         assert browsers.get(browser) == details
