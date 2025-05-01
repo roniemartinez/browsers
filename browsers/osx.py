@@ -35,16 +35,16 @@ OSX_BROWSER_BUNDLE_DICT = {item[1]: item for item in OSX_BROWSER_BUNDLE_LIST}
 
 def browsers() -> Iterator[Browser]:  # type: ignore[return]
     if sys.platform == "darwin":
-        found_browsers_plists = set()
+        found_browser_plists = set()
 
         for browser, bundle_id, version_string in OSX_BROWSER_BUNDLE_LIST:
             app_dirs = subprocess.getoutput(f'mdfind "kMDItemCFBundleIdentifier == {bundle_id}"').splitlines()
             for app_dir in app_dirs:
                 plist_path = os.path.join(app_dir, "Contents/Info.plist")
-                if plist_path in found_browsers_plists:
+                if plist_path in found_browser_plists:
                     continue
 
-                found_browsers_plists.add(plist_path)
+                found_browser_plists.add(plist_path)
 
                 with open(plist_path, "rb") as f:
                     plist = plistlib.load(f)
@@ -52,7 +52,7 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
 
         # Naively iterate /Applications folder in case the above check fails
         for plist_path in glob.glob("/Applications/*.app/Contents/Info.plist"):
-            if plist_path in found_browsers_plists:
+            if plist_path in found_browser_plists:
                 continue
 
             with open(plist_path, "rb") as f:
@@ -61,7 +61,7 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                 if bundle_id not in OSX_BROWSER_BUNDLE_DICT:
                     continue
 
-                found_browsers_plists.add(plist_path)
+                found_browser_plists.add(plist_path)
                 browser, _, version_string = OSX_BROWSER_BUNDLE_DICT[bundle_id]
                 app_dir = os.path.dirname(os.path.dirname(plist_path))
 
