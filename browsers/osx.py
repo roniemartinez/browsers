@@ -10,6 +10,7 @@ OSX_BROWSER_BUNDLE_LIST = (
     # browser name, bundle ID, version string
     ("chrome", "com.google.Chrome", "CFBundleShortVersionString"),
     ("chrome-canary", "com.google.Chrome.canary", "CFBundleShortVersionString"),
+    ("chrome-test", "com.google.chrome.for.testing", "CFBundleShortVersionString"),
     ("chromium", "org.chromium.Chromium", "CFBundleShortVersionString"),
     ("firefox", "org.mozilla.firefox", "CFBundleShortVersionString"),
     ("firefox-developer", "org.mozilla.firefoxdeveloperedition", "CFBundleShortVersionString"),
