@@ -16,7 +16,13 @@ These tests are based on what browsers exists in Github Actions virtual environm
     "browser",
     (
         pytest.param("chrome", id="chrome"),
-        pytest.param("chrome-test", id="chrome-test", marks=pytest.mark.skipif(sys.platform != "darwin" or os.getenv("GITHUB_ACTIONS") != "true", reason="github-actions-only")),
+        pytest.param(
+            "chrome-test",
+            id="chrome-test",
+            marks=pytest.mark.skipif(
+                sys.platform != "darwin" or os.getenv("GITHUB_ACTIONS") != "true", reason="github-actions-only"
+            ),
+        ),
         pytest.param("firefox", id="firefox"),
         pytest.param("safari", id="safari", marks=pytest.mark.skipif(sys.platform != "darwin", reason="osx-only")),
         pytest.param(
@@ -52,7 +58,9 @@ def test_browsers(browser: str) -> None:
                 "path": "/Applications/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
                 "version": ANY,
             },
-            marks=pytest.mark.skipif(sys.platform != "darwin" or os.getenv("GITHUB_ACTIONS") != "true", reason="github-actions-only"),
+            marks=pytest.mark.skipif(
+                sys.platform != "darwin" or os.getenv("GITHUB_ACTIONS") != "true", reason="github-actions-only"
+            ),
             id="chrome-test-osx",
         ),
         pytest.param(
