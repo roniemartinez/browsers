@@ -1,5 +1,7 @@
 import os
+import subprocess
 import sys
+import unittest.mock
 from typing import Dict
 from unittest.mock import ANY
 
@@ -36,6 +38,13 @@ def test_browsers(browser: str) -> None:
     assert browser in available_browsers
 
 
+@pytest.mark.parametrize(
+    "naive",
+    (
+        pytest.param(False, id="non-naive"),
+        pytest.param(True, id="naive"),
+    ),
+)
 @pytest.mark.parametrize(
     ("browser", "details"),
     (
@@ -164,5 +173,9 @@ def test_browsers(browser: str) -> None:
         ),
     ),
 )
-def test_get(browser: str, details: Dict) -> None:
-    assert browsers.get(browser) == details
+def test_get(naive: bool, browser: str, details: Dict) -> None:
+    # if naive, mock subprocess.getoutput else just wrap it
+    kwargs = {"return_value": ""} if naive else ({"wraps": subprocess.getoutput})
+
+    with unittest.mock.patch("subprocess.getoutput", **kwargs):
+        assert browsers.get(browser) == details
