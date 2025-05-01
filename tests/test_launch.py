@@ -1,3 +1,4 @@
+import os
 import sys
 from unittest import mock
 
@@ -34,6 +35,18 @@ These tests are based on what browsers exists in Github Actions virtual environm
 def test_launch(mock_launch: mock.MagicMock, chrome_path: str) -> None:
     browsers.launch("chrome", url="https://github.com/roniemartinez/browsers")
     mock_launch.assert_called_with("chrome", chrome_path, [], "https://github.com/roniemartinez/browsers")
+
+
+@pytest.mark.skipif(sys.platform != "darwin" or os.getenv("GITHUB_ACTIONS") != "true", reason="github-actions-only")
+@mock.patch.object(browsers, "_launch")
+def test_launch_chrome_test(mock_launch: mock.MagicMock) -> None:
+    browsers.launch("chrome-test", url="https://github.com/roniemartinez/browsers")
+    mock_launch.assert_called_with(
+        "chrome-test",
+        "/Applications/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+        [],
+        "https://github.com/roniemartinez/browsers",
+    )
 
 
 @mock.patch.object(browsers, "_launch")
