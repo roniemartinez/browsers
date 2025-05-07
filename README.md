@@ -144,6 +144,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://t.me/automation_remarks_ua"><img src="https://avatars.githubusercontent.com/u/4622856?v=4?s=100" width="100px;" alt="Sergey Pirogov"/><br /><sub><b>Sergey Pirogov</b></sub></a><br /><a href="https://github.com/roniemartinez/browsers/issues?q=author%3ASergeyPirogov" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/vanderboon"><img src="https://avatars.githubusercontent.com/u/90931?v=4?s=100" width="100px;" alt="vanderboon"/><br /><sub><b>vanderboon</b></sub></a><br /><a href="https://github.com/roniemartinez/browsers/commits?author=vanderboon" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://stanislaw.github.io/"><img src="https://avatars.githubusercontent.com/u/452547?v=4?s=100" width="100px;" alt="Stanislav Pankevich"/><br /><sub><b>Stanislav Pankevich</b></sub></a><br /><a href="https://github.com/roniemartinez/browsers/issues?q=author%3Astanislaw" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/arossert"><img src="https://avatars.githubusercontent.com/u/7085494?v=4?s=100" width="100px;" alt="Amir Rossert"/><br /><sub><b>Amir Rossert</b></sub></a><br /><a href="https://github.com/roniemartinez/browsers/commits?author=arossert" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
