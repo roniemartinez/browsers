@@ -31,12 +31,6 @@ XDG_DATA_LOCATIONS = (
 VERSION_PATTERN = re.compile(r"\b(\S+\.\S+)\b")  # simple pattern assuming all version strings have a dot on them
 
 
-def get_exec_entry(path: str):
-    config = configparser.ConfigParser(interpolation=None)
-    config.read(path, encoding="utf-8")
-    return config.get("Desktop Entry", "Exec")
-
-
 def browsers() -> Iterator[Browser]:  # type: ignore[return]
     if sys.platform == "linux":
         for browser, desktop_entries in LINUX_DESKTOP_ENTRY_LIST:
@@ -50,6 +44,7 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                     config = configparser.ConfigParser(interpolation=None)
                     config.read(path, encoding="utf-8")
                     executable_path = config.get("Desktop Entry", "Exec")
+                    name = config.get("Desktop Entry", "Name")
 
                     if executable_path.lower().endswith(" %u"):
                         executable_path = executable_path[:-3].strip()
@@ -59,5 +54,5 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                         version = match[0]
 
                     yield Browser(
-                        browser_type=browser, path=executable_path, display_name=entry.getName(), version=version
+                        browser_type=browser, path=executable_path, display_name=name, version=version
                     )
