@@ -53,6 +53,4 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                     if match := VERSION_PATTERN.search(version):
                         version = match[0]
 
-                    yield Browser(
-                        browser_type=browser, path=executable_path, display_name=name, version=version
-                    )
+                    yield Browser(browser_type=browser, path=executable_path, display_name=name, version=version)
