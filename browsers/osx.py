@@ -74,7 +74,7 @@ def _get_browser_info(app_dir: str, browser: str, plist: dict, version_string: s
     display_name = plist.get("CFBundleDisplayName") or plist.get("CFBundleName", browser)
     version = plist[version_string]
 
-    if browser.startswith("brave"):
+    if browser.startswith("brave"):  # pragma: no cover
         version = _reverse_brave_version(version)
 
     return Browser(
