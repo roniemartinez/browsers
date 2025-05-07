@@ -2,6 +2,7 @@ import os
 import re
 import subprocess
 import sys
+import configparser
 from typing import Iterator
 
 from .common import Browser
@@ -30,10 +31,14 @@ XDG_DATA_LOCATIONS = (
 VERSION_PATTERN = re.compile(r"\b(\S+\.\S+)\b")  # simple pattern assuming all version strings have a dot on them
 
 
+def get_exec_entry(path: str):
+    config = configparser.ConfigParser(interpolation=None)
+    config.read(path, encoding="utf-8")
+    return config.get("Desktop Entry", "Exec")
+
+
 def browsers() -> Iterator[Browser]:  # type: ignore[return]
     if sys.platform == "linux":
-        from xdg.DesktopEntry import DesktopEntry
-
         for browser, desktop_entries in LINUX_DESKTOP_ENTRY_LIST:
             for application_dir in XDG_DATA_LOCATIONS:
                 for desktop_entry in desktop_entries:
@@ -42,8 +47,9 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                     if not os.path.isfile(path):
                         continue
 
-                    entry = DesktopEntry(path)
-                    executable_path = entry.getExec()
+                    config = configparser.ConfigParser(interpolation=None)
+                    config.read(path, encoding="utf-8")
+                    executable_path = config.get("Desktop Entry", "Exec")
 
                     if executable_path.lower().endswith(" %u"):
                         executable_path = executable_path[:-3].strip()
