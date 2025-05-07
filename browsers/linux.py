@@ -1,8 +1,8 @@
+import configparser
 import os
 import re
 import subprocess
 import sys
-import configparser
 from typing import Iterator
 
 from .common import Browser
