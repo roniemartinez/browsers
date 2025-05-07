@@ -1,3 +1,4 @@
+import configparser
 import os
 import re
 import subprocess
@@ -32,8 +33,6 @@ VERSION_PATTERN = re.compile(r"\b(\S+\.\S+)\b")  # simple pattern assuming all v
 
 def browsers() -> Iterator[Browser]:  # type: ignore[return]
     if sys.platform == "linux":
-        from xdg.DesktopEntry import DesktopEntry
-
         for browser, desktop_entries in LINUX_DESKTOP_ENTRY_LIST:
             for application_dir in XDG_DATA_LOCATIONS:
                 for desktop_entry in desktop_entries:
@@ -42,8 +41,10 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                     if not os.path.isfile(path):
                         continue
 
-                    entry = DesktopEntry(path)
-                    executable_path = entry.getExec()
+                    config = configparser.ConfigParser(interpolation=None)
+                    config.read(path, encoding="utf-8")
+                    executable_path = config.get("Desktop Entry", "Exec")
+                    name = config.get("Desktop Entry", "Name")
 
                     if executable_path.lower().endswith(" %u"):
                         executable_path = executable_path[:-3].strip()
@@ -52,6 +53,4 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                     if match := VERSION_PATTERN.search(version):
                         version = match[0]
 
-                    yield Browser(
-                        browser_type=browser, path=executable_path, display_name=entry.getName(), version=version
-                    )
+                    yield Browser(browser_type=browser, path=executable_path, display_name=name, version=version)
