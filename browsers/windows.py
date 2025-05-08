@@ -119,3 +119,5 @@ def _get_file_version(file_path: str) -> str:
         revision = dw_file_version_ls & 0xFFFF
 
         return f"{major}.{minor}.{build}.{revision}"
+
+    return ""
