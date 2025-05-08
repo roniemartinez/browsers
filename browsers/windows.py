@@ -92,29 +92,30 @@ class VS_FIXEDFILEINFO(ctypes.Structure):
 
 
 def _get_file_version(file_path: str) -> str:
-    if not (size := ctypes.windll.version.GetFileVersionInfoSizeW(file_path, None)):
-        return ""
+    if sys.platform == "win32":
+        if not (size := ctypes.windll.version.GetFileVersionInfoSizeW(file_path, None)):
+            return ""
 
-    buffer = ctypes.create_string_buffer(size)
+        buffer = ctypes.create_string_buffer(size)
 
-    if not ctypes.windll.version.GetFileVersionInfoW(file_path, 0, size, buffer):
-        return ""
+        if not ctypes.windll.version.GetFileVersionInfoW(file_path, 0, size, buffer):
+            return ""
 
-    lplp_buffer = ctypes.c_void_p()
-    u_len = wintypes.UINT()
-    ctypes.windll.version.VerQueryValueW(buffer, "\\", ctypes.byref(lplp_buffer), ctypes.byref(u_len))
+        lplp_buffer = ctypes.c_void_p()
+        u_len = wintypes.UINT()
+        ctypes.windll.version.VerQueryValueW(buffer, "\\", ctypes.byref(lplp_buffer), ctypes.byref(u_len))
 
-    if not lplp_buffer.value:
-        return ""
+        if not lplp_buffer.value:
+            return ""
 
-    ffi = ctypes.cast(lplp_buffer.value, ctypes.POINTER(VS_FIXEDFILEINFO)).contents
+        ffi = ctypes.cast(lplp_buffer.value, ctypes.POINTER(VS_FIXEDFILEINFO)).contents
 
-    dw_file_version_ms = ffi.dwFileVersionMS
-    dw_file_version_ls = ffi.dwFileVersionLS
+        dw_file_version_ms = ffi.dwFileVersionMS
+        dw_file_version_ls = ffi.dwFileVersionLS
 
-    major = (dw_file_version_ms >> 16) & 0xFFFF
-    minor = dw_file_version_ms & 0xFFFF
-    build = (dw_file_version_ls >> 16) & 0xFFFF
-    revision = dw_file_version_ls & 0xFFFF
+        major = (dw_file_version_ms >> 16) & 0xFFFF
+        minor = dw_file_version_ms & 0xFFFF
+        build = (dw_file_version_ls >> 16) & 0xFFFF
+        revision = dw_file_version_ls & 0xFFFF
 
-    return f"{major}.{minor}.{build}.{revision}"
+        return f"{major}.{minor}.{build}.{revision}"
