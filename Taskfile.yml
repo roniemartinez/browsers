@@ -33,5 +33,9 @@ tasks:
       - poetry run pytest
 
   tag:
+    vars:
+      VERSION:
+        sh: poetry version --short
     cmds:
-      - VERSION=`poetry version --short`; git tag -s -a $$VERSION -m "Release $$VERSION"; echo "Tagged $$VERSION";
+      - git tag -s -a {{ .VERSION }} -m "Release {{ .VERSION }} "
+      - echo "Tagged {{ .VERSION }} "
