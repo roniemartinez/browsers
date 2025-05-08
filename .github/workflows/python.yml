@@ -34,6 +34,11 @@ jobs:
             pip-cache: ~\AppData\Local\pip\Cache
             poetry-cache: ~\AppData\Local\pypoetry\Cache
     steps:
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -59,13 +64,13 @@ jobs:
             ${{ runner.os }}-${{ matrix.python-version }}-mypy-
       - name: Install dependencies
         run: |
-          make install-actions
+          task install-actions
       - name: Lint
         run: |
-          make lint
+          task lint
       - name: Test
         run: |
-          make test
+          task test
       - name: Code Coverage
         uses: codecov/codecov-action@v5.4.2
         if: ${{ success() }}
