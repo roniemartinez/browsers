@@ -9,6 +9,11 @@ from .common import Browser
 
 OSX_BROWSER_BUNDLE_LIST = (
     # browser name, bundle ID, version string
+    ("basilisk", "org.mozilla.basilisk", "CFBundleShortVersionString"),
+    ("brave", "com.brave.Browser", "CFBundleVersion"),
+    ("brave-beta", "com.brave.Browser.beta", "CFBundleVersion"),
+    ("brave-dev", "com.brave.Browser.dev", "CFBundleVersion"),
+    ("brave-nightly", "com.brave.Browser.nightly", "CFBundleVersion"),
     ("chrome", "com.google.Chrome", "CFBundleShortVersionString"),
     ("chrome-canary", "com.google.Chrome.canary", "CFBundleShortVersionString"),
     ("chrome-test", "com.google.chrome.for.testing", "CFBundleShortVersionString"),
@@ -16,18 +21,18 @@ OSX_BROWSER_BUNDLE_LIST = (
     ("firefox", "org.mozilla.firefox", "CFBundleShortVersionString"),
     ("firefox-developer", "org.mozilla.firefoxdeveloperedition", "CFBundleShortVersionString"),
     ("firefox-nightly", "org.mozilla.nightly", "CFBundleShortVersionString"),
-    ("safari", "com.apple.Safari", "CFBundleShortVersionString"),
-    ("opera", "com.operasoftware.Opera", "CFBundleVersion"),
-    ("opera-beta", "com.operasoftware.OperaNext", "CFBundleVersion"),
-    ("opera-developer", "com.operasoftware.OperaDeveloper", "CFBundleVersion"),
+    ("floorp", "org.mozilla.floorp", "CFBundleShortVersionString"),
+    ("librewolf", "org.mozilla.librewolf", "CFBundleShortVersionString"),
     ("msedge", "com.microsoft.edgemac", "CFBundleShortVersionString"),
     ("msedge-beta", "com.microsoft.edgemac.Beta", "CFBundleShortVersionString"),
     ("msedge-dev", "com.microsoft.edgemac.Dev", "CFBundleShortVersionString"),
     ("msedge-canary", "com.microsoft.edgemac.Canary", "CFBundleShortVersionString"),
-    ("brave", "com.brave.Browser", "CFBundleVersion"),
-    ("brave-beta", "com.brave.Browser.beta", "CFBundleVersion"),
-    ("brave-dev", "com.brave.Browser.dev", "CFBundleVersion"),
-    ("brave-nightly", "com.brave.Browser.nightly", "CFBundleVersion"),
+    ("opera", "com.operasoftware.Opera", "CFBundleVersion"),
+    ("opera-beta", "com.operasoftware.OperaNext", "CFBundleVersion"),
+    ("opera-developer", "com.operasoftware.OperaDeveloper", "CFBundleVersion"),
+    ("pale-moon", "org.mozilla.pale moon", "CFBundleShortVersionString"),
+    ("safari", "com.apple.Safari", "CFBundleShortVersionString"),
+    ("waterfox", "net.waterfox.waterfox", "CFBundleShortVersionString"),
 )
 
 OSX_BROWSER_BUNDLE_DICT = {item[1]: item for item in OSX_BROWSER_BUNDLE_LIST}
