@@ -8,23 +8,28 @@ from typing import Iterator
 from .common import Browser
 
 WINDOWS_REGISTRY_BROWSER_NAMES = {
-    "Google Chrome": "chrome",
-    "Google Chrome Canary": "chrome-canary",
+    "Ablaze Floorp": "floorp",
+    "Basilisk": "basilisk",
+    "Brave": "brave",
+    "Brave Beta": "brave-beta",
+    "Brave Nightly": "brave-nightly",
     "Chromium": "chromium",
-    "Mozilla Firefox": "firefox",
     "Firefox Developer Edition": "firefox-developer",
     "Firefox Nightly": "firefox-nightly",
-    "Opera Stable": "opera",
-    "Opera beta": "opera-beta",
-    "Opera developer": "opera-developer",
+    "Google Chrome": "chrome",
+    "Google Chrome Canary": "chrome-canary",
+    "Internet Explorer": "msie",
+    "LibreWolf": "librewolf",
     "Microsoft Edge": "msedge",
     "Microsoft Edge Beta": "msedge-beta",
     "Microsoft Edge Dev": "msedge-dev",
     "Microsoft Edge Canary": "msedge-canary",
-    "Internet Explorer": "msie",
-    "Brave": "brave",
-    "Brave Beta": "brave-beta",
-    "Brave Nightly": "brave-nightly",
+    "Mozilla Firefox": "firefox",
+    "Opera Stable": "opera",
+    "Opera beta": "opera-beta",
+    "Opera developer": "opera-developer",
+    "Pale Moon": "pale-moon",
+    "Waterfox": "waterfox",
 }
 
 
