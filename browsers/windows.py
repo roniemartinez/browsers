@@ -1,6 +1,8 @@
 import contextlib
+import ctypes
 import os
 import sys
+from ctypes import wintypes
 from typing import Iterator
 
 from .common import Browser
@@ -71,10 +73,51 @@ def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Browser]: 
                     )
 
 
-def _get_file_version(path: str) -> str:
-    import win32api
+class VS_FIXEDFILEINFO(ctypes.Structure):
+    _fields_ = [
+        ("dwSignature", wintypes.DWORD),
+        ("dwStrucVersion", wintypes.DWORD),
+        ("dwFileVersionMS", wintypes.DWORD),
+        ("dwFileVersionLS", wintypes.DWORD),
+        ("dwProductVersionMS", wintypes.DWORD),
+        ("dwProductVersionLS", wintypes.DWORD),
+        ("dwFileFlagsMask", wintypes.DWORD),
+        ("dwFileFlags", wintypes.DWORD),
+        ("dwFileOS", wintypes.DWORD),
+        ("dwFileType", wintypes.DWORD),
+        ("dwFileSubtype", wintypes.DWORD),
+        ("dwFileDateMS", wintypes.DWORD),
+        ("dwFileDateLS", wintypes.DWORD),
+    ]
 
-    info = win32api.GetFileVersionInfo(path, "\\")
-    ms = info["FileVersionMS"]
-    ls = info["FileVersionLS"]
-    return ".".join(map(str, (win32api.HIWORD(ms), win32api.LOWORD(ms), win32api.HIWORD(ls), win32api.LOWORD(ls))))
+
+def _get_file_version(file_path: str) -> str:
+    if sys.platform == "win32":
+        if not (size := ctypes.windll.version.GetFileVersionInfoSizeW(file_path, None)):
+            return ""
+
+        buffer = ctypes.create_string_buffer(size)
+
+        if not ctypes.windll.version.GetFileVersionInfoW(file_path, 0, size, buffer):
+            return ""
+
+        lplp_buffer = ctypes.c_void_p()
+        u_len = wintypes.UINT()
+        ctypes.windll.version.VerQueryValueW(buffer, "\\", ctypes.byref(lplp_buffer), ctypes.byref(u_len))
+
+        if not lplp_buffer.value:
+            return ""
+
+        ffi = ctypes.cast(lplp_buffer.value, ctypes.POINTER(VS_FIXEDFILEINFO)).contents
+
+        dw_file_version_ms = ffi.dwFileVersionMS
+        dw_file_version_ls = ffi.dwFileVersionLS
+
+        major = (dw_file_version_ms >> 16) & 0xFFFF
+        minor = dw_file_version_ms & 0xFFFF
+        build = (dw_file_version_ls >> 16) & 0xFFFF
+        revision = dw_file_version_ls & 0xFFFF
+
+        return f"{major}.{minor}.{build}.{revision}"
+
+    return ""

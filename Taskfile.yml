@@ -1,0 +1,40 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  install:
+    cmds:
+      - pip3 install -U pip setuptools poetry
+      - poetry install
+
+  install-actions:
+    cmds:
+      - pip3 install pip setuptools poetry
+      - poetry config virtualenvs.create false
+      - poetry install
+
+  format:
+    cmds:
+      - poetry run autoflake --remove-all-unused-imports --in-place -r --exclude __init__.py .
+      - poetry run isort .
+      - poetry run black .
+
+  lint:
+    cmds:
+      - poetry run autoflake --remove-all-unused-imports --in-place -r --exclude __init__.py --check .
+      - poetry run isort --check-only .
+      - poetry run black --check .
+      - poetry run pflake8 .
+      - poetry run mypy tests browsers
+
+  test:
+    cmds:
+      - poetry run pytest
+
+  tag:
+    vars:
+      VERSION:
+        sh: poetry version --short
+    cmds:
+      - git tag -s -a {{ .VERSION }} -m "Release {{ .VERSION }} "
