@@ -9,6 +9,9 @@ from .common import Browser
 
 LINUX_DESKTOP_ENTRY_LIST = (
     # desktop entry name can be "firefox.desktop" or "firefox_firefox.desktop"
+    ("brave", ("brave-browser", "brave_brave")),
+    ("brave-beta", ("brave-browser-beta",)),
+    ("brave-nightly", ("brave-browser-nightly",)),
     ("chrome", ("google-chrome",)),
     ("chromium", ("chromium", "chromium_chromium")),
     ("firefox", ("firefox", "firefox_firefox")),
@@ -16,9 +19,6 @@ LINUX_DESKTOP_ENTRY_LIST = (
     ("opera", ("opera_opera",)),
     ("opera-beta", ("opera-beta_opera-beta",)),
     ("opera-developer", ("opera-developer_opera-developer",)),
-    ("brave", ("brave-browser", "brave_brave")),
-    ("brave-beta", ("brave-browser-beta",)),
-    ("brave-nightly", ("brave-browser-nightly",)),
 )
 
 # $XDG_DATA_HOME and $XDG_DATA_DIRS are not always set
