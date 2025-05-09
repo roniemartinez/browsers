@@ -80,7 +80,7 @@ def _launch(
     elif url is not None:
         url_arg.append(url)
 
-    if browser == "safari":
+    if browser.startswith("safari"):
         if args:
             logger.warning("Safari does not accept command line arguments. %s will be ignored.", str(args))
         command = ["open", "--wait-apps", "--new", "--fresh", "-a", path, *url_arg]

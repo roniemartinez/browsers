@@ -14,11 +14,14 @@ LINUX_DESKTOP_ENTRY_LIST = (
     ("brave-nightly", ("brave-browser-nightly",)),
     ("chrome", ("google-chrome",)),
     ("chromium", ("chromium", "chromium_chromium")),
+    ("falkon", ("falkon_falkon",)),
     ("firefox", ("firefox", "firefox_firefox")),
+    ("konqueror", ("konqueror_konqueror",)),
     ("msedge", ("microsoft-edge",)),
     ("opera", ("opera_opera",)),
     ("opera-beta", ("opera-beta_opera-beta",)),
     ("opera-developer", ("opera-developer_opera-developer",)),
+    ("vivaldi", ("vivaldi_vivaldi-stable",)),
 )
 
 # $XDG_DATA_HOME and $XDG_DATA_DIRS are not always set
