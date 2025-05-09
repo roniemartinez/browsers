@@ -20,6 +20,7 @@ OSX_BROWSER_BUNDLE_LIST = (
     ("chrome-dev", "com.google.Chrome.dev", "CFBundleShortVersionString"),
     ("chrome-test", "com.google.chrome.for.testing", "CFBundleShortVersionString"),
     ("chromium", "org.chromium.Chromium", "CFBundleShortVersionString"),
+    ("duckduckgo", "com.duckduckgo.macos.browser", "CFBundleShortVersionString"),
     ("epic", "com.hiddenreflex.Epic", "CFBundleShortVersionString"),
     ("firefox", "org.mozilla.firefox", "CFBundleShortVersionString"),
     ("firefox-developer", "org.mozilla.firefoxdeveloperedition", "CFBundleShortVersionString"),
