@@ -38,9 +38,8 @@ def get(browser: str, version: str = "*") -> Optional[Browser]:
     """
     Returns the information for the provided browser key.
 
-    :param browser: Any of "chrome", "chrome-canary", "firefox", "firefox-developer", "firefox-nightly", "opera",
-                    "opera-beta", "opera-developer", "msedge", "msedge-beta", "msedge-dev", "msedge-canary", "msie",
-                    "brave", "brave-beta", "brave-dev", "brave-nightly", and "safari".
+    :param browser: Any of "chrome", "chrome-canary", "firefox", "firefox-developer", "firefox-nightly", "opera", ...
+                    see LINUX_DESKTOP_ENTRY_LIST, OSX_BROWSER_BUNDLE_LIST and WINDOWS_REGISTRY_BROWSER_NAMES for values
     :param version: Version string (supports wildcard, e.g. 100.*)
     :return: Dictionary containing "path", "display_name" and "version".
     """
@@ -76,7 +75,7 @@ def _launch(
 ) -> subprocess.Popen:  # pragma: no cover
     url_arg = []
 
-    if browser == "firefox" and url is not None:
+    if browser == "firefox" and url is not None:  # NOTE: this does not happen on firefox-developer and firefox-nightly
         args = ("-new-tab", url, *args)
     elif url is not None:
         url_arg.append(url)
