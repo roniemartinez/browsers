@@ -37,4 +37,4 @@ tasks:
       VERSION:
         sh: poetry version --short
     cmds:
-      - git tag -s -a {{ .VERSION }} -m "Release {{ .VERSION }} "
+      - git tag -s -a {{ .VERSION }} -m "Release {{ .VERSION }}"

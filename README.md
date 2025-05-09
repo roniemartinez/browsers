@@ -128,7 +128,7 @@ browsers.launch("chrome", version="100.*")  # wildcard
 - [httptoolkit/browser-launcher](https://github.com/httptoolkit/browser-launcher)
 - [Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/latest/)
 - [Github: webbrowser.open incomplete on Windows](https://github.com/python/cpython/issues/52479#issuecomment-1093496412)
-- [Stackoverflow: Grabbing full file version of an exe in Python](https://stackoverflow.com/a/68774871/1279157)
+- [StackOverflow: Finding the version of an application from Python?](https://stackoverflow.com/questions/2270345/finding-the-version-of-an-application-from-python/2270367)
 
 ## Contributors ✨
 
