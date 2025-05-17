@@ -1,6 +1,8 @@
 import configparser
 import os
 import re
+import shlex
+import shutil
 import subprocess
 import sys
 from typing import Iterator
@@ -46,11 +48,24 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
 
                     config = configparser.ConfigParser(interpolation=None)
                     config.read(path, encoding="utf-8")
-                    executable_path = config.get("Desktop Entry", "Exec")
                     name = config.get("Desktop Entry", "Name")
 
-                    if executable_path.lower().endswith(" %u"):
-                        executable_path = executable_path[:-3].strip()
+                    executable_path = config.get(
+                        "Desktop Entry", "TryExec", fallback=config.get("Desktop Entry", "Exec")
+                    )
+
+                    # Try to remove BAMF_DESKTOP_FILE_HINT and find the actual executable/binary
+                    for path in shlex.split(executable_path):
+                        if path == "env":
+                            continue
+                        if os.path.exists(path):
+                            executable_path = path
+                            break
+                        # Find binary path from $PATH
+                        # see https://specifications.freedesktop.org/desktop-entry-spec/latest/exec-variables.html
+                        if result := shutil.which(path):
+                            executable_path = result
+                            break
 
                     version = subprocess.getoutput(f"{executable_path} --version 2>&1").strip()
                     if match := VERSION_PATTERN.search(version):
