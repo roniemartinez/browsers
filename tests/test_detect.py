@@ -121,7 +121,7 @@ def test_browsers(browser: str) -> None:
             {
                 "browser_type": "firefox",
                 "display_name": "Firefox Web Browser",
-                "path": "firefox",
+                "path": "/usr/bin/firefox",
                 "version": ANY,
             },
             marks=pytest.mark.skipif(sys.platform != "linux", reason="linux-only"),
