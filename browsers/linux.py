@@ -61,7 +61,8 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                         if os.path.exists(path):
                             executable_path = path
                             break
-                        # Find binary path from $PATH (see https://specifications.freedesktop.org/desktop-entry-spec/latest/exec-variables.html)
+                        # Find binary path from $PATH
+                        # see https://specifications.freedesktop.org/desktop-entry-spec/latest/exec-variables.html
                         if result := shutil.which(path):
                             executable_path = result
                             break
