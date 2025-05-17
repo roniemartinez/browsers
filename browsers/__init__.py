@@ -1,6 +1,5 @@
 import fnmatch
 import logging
-import shlex
 import subprocess
 import sys
 from typing import Iterator, Optional, Sequence
@@ -84,9 +83,7 @@ def _launch(
         if args:
             logger.warning("Safari does not accept command line arguments. %s will be ignored.", str(args))
         command = ["open", "--wait-apps", "--new", "--fresh", "-a", path, *url_arg]
-    elif sys.platform != "linux":
-        command = [path, *url_arg, *args]
     else:
-        command = [*shlex.split(path), *url_arg, *args]
+        command = [path, *url_arg, *args]
 
     return subprocess.Popen(command)
