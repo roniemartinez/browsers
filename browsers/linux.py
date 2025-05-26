@@ -102,4 +102,3 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                     yield Browser(
                         browser_type=browser_type, path=executable_path, display_name=display_name, version=version
                     )
-
