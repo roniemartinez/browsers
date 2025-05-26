@@ -90,13 +90,12 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                 if not found:
                     continue
 
-                version = subprocess.getoutput(f"{executable_path} --version 2>/dev/null").strip()
-                if match := VERSION_PATTERN.search(version):
-                    version = match[0]
+                if browser_type := LINUX_DESKTOP_BROWSER_NAMES.get(display_name):
+                    version = subprocess.getoutput(f"{executable_path} --version 2>/dev/null").strip()
+                    if match := VERSION_PATTERN.search(version):
+                        version = match[0]
 
-                yield Browser(
-                    browser_type=LINUX_DESKTOP_BROWSER_NAMES.get(display_name, "unknown"),
-                    path=executable_path,
-                    display_name=display_name,
-                    version=version,
-                )
+                    yield Browser(
+                        browser_type=browser_type, path=executable_path, display_name=display_name, version=version
+                    )
+
