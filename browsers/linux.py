@@ -45,7 +45,7 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                 config.read(desktop_file, encoding="utf-8")
                 if (
                     "WebBrowser" not in config.get("Desktop Entry", "Categories").split(";")
-                    and config.get("Desktop Entry", "GenericName") != "Web Browser"
+                    and config.get("Desktop Entry", "GenericName", fallback="") != "Web Browser"
                 ):
                     continue
 
