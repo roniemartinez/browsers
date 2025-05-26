@@ -43,14 +43,14 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                 desktop_file = os.path.join(application_dir, file_name)
                 config = configparser.ConfigParser(interpolation=None)
                 config.read(desktop_file, encoding="utf-8")
-                if "WebBrowser" not in config.get("Desktop Entry", "Categories").split(";") and config.get(
-                        "Desktop Entry", "GenericName") != "Web Browser":
+                if (
+                    "WebBrowser" not in config.get("Desktop Entry", "Categories").split(";")
+                    and config.get("Desktop Entry", "GenericName") != "Web Browser"
+                ):
                     continue
 
                 display_name = config.get("Desktop Entry", "Name")
-                executable_path = config.get(
-                    "Desktop Entry", "TryExec", fallback=config.get("Desktop Entry", "Exec")
-                )
+                executable_path = config.get("Desktop Entry", "TryExec", fallback=config.get("Desktop Entry", "Exec"))
 
                 # Try to remove BAMF_DESKTOP_FILE_HINT and find the actual executable/binary
                 for path in shlex.split(executable_path):
