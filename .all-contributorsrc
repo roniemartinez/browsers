@@ -56,6 +56,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "DTS-And-Eaglepoint-Funding",
+      "name": "Deep-Tech Showcase and Eaglepoint Funding",
+      "avatar_url": "https://avatars.githubusercontent.com/u/96525640?v=4",
+      "profile": "https://www.eaglepointfunding.com/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
