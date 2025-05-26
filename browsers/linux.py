@@ -10,6 +10,8 @@ from typing import Iterator
 
 from .common import Browser
 
+IGNORE_LIST = ("kfmclient",)
+
 LINUX_DESKTOP_BROWSER_NAMES = {
     "Brave": "brave",
     "Brave Web Browser": "brave",
@@ -93,7 +95,7 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                             found = True
                             break
 
-                    if not found:
+                    if not found or executable_path.endswith(IGNORE_LIST):
                         continue
 
                 if browser_type := LINUX_DESKTOP_BROWSER_NAMES.get(display_name):
