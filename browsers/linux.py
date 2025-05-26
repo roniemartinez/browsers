@@ -40,8 +40,7 @@ VERSION_PATTERN = re.compile(r"\b(\S+\.\S+)\b")  # simple pattern assuming all v
 def browsers() -> Iterator[Browser]:  # type: ignore[return]
     if sys.platform == "linux":
         for application_dir in XDG_DATA_LOCATIONS:
-            for file_name in glob.glob("*.desktop", root_dir=application_dir):
-                desktop_file = os.path.join(application_dir, file_name)
+            for desktop_file in glob.glob(os.path.join(application_dir, "*.desktop")):
                 config = configparser.ConfigParser(interpolation=None)
                 config.read(desktop_file, encoding="utf-8")
                 if (
