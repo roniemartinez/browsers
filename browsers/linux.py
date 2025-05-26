@@ -18,6 +18,7 @@ LINUX_DESKTOP_BROWSER_NAMES = {
     "Floorp": "floorp",
     "Google Chrome": "chrome",
     "Google Chrome dev": "chrome-dev",
+    "Google Chrome (unstable)": "chrome-dev",
     "Chromium": "chromium",
     "Chromium Web Browser": "chromium",
     "Falkon": "falkon",
@@ -60,26 +61,36 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
 
                 display_name = config.get("Desktop Entry", "Name")
                 if flatpak_name := config.get("Desktop Entry", "X-Flatpak", fallback=""):
-                    executable_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(desktop_file))), "bin", flatpak_name)
+                    executable_path = os.path.join(
+                        os.path.dirname(os.path.dirname(os.path.dirname(desktop_file))), "bin", flatpak_name
+                    )
                 else:
                     executable_path = config.get(
                         "Desktop Entry", "TryExec", fallback=config.get("Desktop Entry", "Exec")
                     )
 
                 # Try to remove BAMF_DESKTOP_FILE_HINT and find the actual executable/binary
+                found = False
                 for path in shlex.split(executable_path):
                     if path == "env":
                         continue
+
                     if os.path.exists(path):
                         executable_path = path
+                        found = True
                         break
+
                     # Find binary path from $PATH
                     # see https://specifications.freedesktop.org/desktop-entry-spec/latest/exec-variables.html
                     if result := shutil.which(path):
                         executable_path = result
+                        found = True
                         break
 
-                version = subprocess.getoutput(f"{executable_path} --version 2>&1").strip()
+                if not found:
+                    continue
+
+                version = subprocess.getoutput(f"{executable_path} --version 2>/dev/null").strip()
                 if match := VERSION_PATTERN.search(version):
                     version = match[0]
 
