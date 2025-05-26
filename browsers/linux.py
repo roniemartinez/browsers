@@ -66,33 +66,35 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                 display_name = config.get("Desktop Entry", "Name")
                 if flatpak_name := config.get("Desktop Entry", "X-Flatpak", fallback=""):
                     executable_path = os.path.join(
-                        os.path.dirname(os.path.dirname(os.path.dirname(desktop_file))), "bin", flatpak_name
+                        os.path.dirname(os.path.dirname(os.path.dirname(desktop_file))),
+                        "bin",
+                        flatpak_name,
                     )
                 else:
                     executable_path = config.get(
                         "Desktop Entry", "TryExec", fallback=config.get("Desktop Entry", "Exec")
                     )
 
-                # Try to remove BAMF_DESKTOP_FILE_HINT and find the actual executable/binary
-                found = False
-                for path in shlex.split(executable_path):
-                    if path == "env":
+                    # Try to remove BAMF_DESKTOP_FILE_HINT and find the actual executable/binary
+                    found = False
+                    for path in shlex.split(executable_path):
+                        if path == "env":
+                            continue
+
+                        if os.path.exists(path):
+                            executable_path = path
+                            found = True
+                            break
+
+                        # Find binary path from $PATH
+                        # see https://specifications.freedesktop.org/desktop-entry-spec/latest/exec-variables.html
+                        if result := shutil.which(path):
+                            executable_path = result
+                            found = True
+                            break
+
+                    if not found:
                         continue
-
-                    if os.path.exists(path):
-                        executable_path = path
-                        found = True
-                        break
-
-                    # Find binary path from $PATH
-                    # see https://specifications.freedesktop.org/desktop-entry-spec/latest/exec-variables.html
-                    if result := shutil.which(path):
-                        executable_path = result
-                        found = True
-                        break
-
-                if not found:
-                    continue
 
                 if browser_type := LINUX_DESKTOP_BROWSER_NAMES.get(display_name):
                     version = subprocess.getoutput(f"{executable_path} --version 2>/dev/null").strip()
