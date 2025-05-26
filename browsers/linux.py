@@ -25,12 +25,16 @@ LINUX_DESKTOP_BROWSER_NAMES = {
     "Firefox": "firefox",
     "Firefox Web Browser": "firefox",
     "Konqueror": "konqueror",
+    "LibreWorf": "librewolf",
     "Microsoft Edge": "msedge",
+    "Microsoft Edge (dev)": "msedge-dev",
     "Opera": "opera",
     "Opera beta": "opera-beta",
     "Opera developer": "opera-developer",
     "Ungoogled Chromium": "ungoogled-chromium",
     "Vivaldi": "vivaldi",
+    "Waterfox": "waterfox",
+    "Yandex Browser": "yandex",
     "Zen Browser": "zen",
 }
 
