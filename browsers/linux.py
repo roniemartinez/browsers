@@ -18,6 +18,7 @@ LINUX_DESKTOP_BROWSER_NAMES = {
     "Chromium Web Browser": "chromium",
     "Falkon": "falkon",
     "Firefox": "firefox",
+    "Firefox Web Browser": "firefox",
     "Konqueror": "konqueror",
     "Microsoft Edge": "msedge",
     "Opera": "opera",
@@ -69,7 +70,6 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                 if match := VERSION_PATTERN.search(version):
                     version = match[0]
 
-                print(display_name)
                 yield Browser(
                     browser_type=LINUX_DESKTOP_BROWSER_NAMES.get(display_name, "unknown"),
                     path=executable_path,
