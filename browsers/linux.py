@@ -57,7 +57,7 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
     if sys.platform == "linux":
         for application_dir in XDG_DATA_LOCATIONS:
             for desktop_file in glob.glob(os.path.join(os.path.expanduser(application_dir), "*.desktop")):
-                config = configparser.ConfigParser(interpolation=None)
+                config = configparser.ConfigParser(interpolation=None, strict=False)
                 config.read(desktop_file, encoding="utf-8")
                 if (
                     "WebBrowser" not in config.get("Desktop Entry", "Categories", fallback="").split(";")
