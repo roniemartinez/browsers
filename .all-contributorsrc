@@ -74,6 +74,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "oleksiicode",
+      "name": "Oleksii Gubanov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/153339237?v=4",
+      "profile": "https://github.com/oleksiicode",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
