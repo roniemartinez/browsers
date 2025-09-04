@@ -148,6 +148,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://www.eaglepointfunding.com/"><img src="https://avatars.githubusercontent.com/u/96525640?v=4?s=100" width="100px;" alt="Deep-Tech Showcase and Eaglepoint Funding"/><br /><sub><b>Deep-Tech Showcase and Eaglepoint Funding</b></sub></a><br /><a href="https://github.com/roniemartinez/browsers/issues?q=author%3ADTS-And-Eaglepoint-Funding" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/dmnmsc"><img src="https://avatars.githubusercontent.com/u/8472142?v=4?s=100" width="100px;" alt="dmnmsc"/><br /><sub><b>dmnmsc</b></sub></a><br /><a href="https://github.com/roniemartinez/browsers/issues?q=author%3Admnmsc" title="Bug reports">🐛</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/oleksiicode"><img src="https://avatars.githubusercontent.com/u/153339237?v=4?s=100" width="100px;" alt="Oleksii Gubanov"/><br /><sub><b>Oleksii Gubanov</b></sub></a><br /><a href="https://github.com/roniemartinez/browsers/issues?q=author%3Aoleksiicode" title="Bug reports">🐛</a></td>
+    </tr>
   </tbody>
 </table>
 
