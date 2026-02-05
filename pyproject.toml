@@ -1,6 +1,6 @@
 [project]
 name = "pybrowsers"
-version = "1.3.1"
+version = "1.3.2"
 description = "Python library for detecting and launching browsers"
 authors = [
     { name = "Ronie Martinez", email = "ronmarti18@gmail.com" }
