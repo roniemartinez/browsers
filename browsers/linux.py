@@ -27,7 +27,7 @@ LINUX_DESKTOP_BROWSER_NAMES = {
     "Firefox": "firefox",
     "Firefox Web Browser": "firefox",
     "Konqueror": "konqueror",
-    "LibreWorf": "librewolf",
+    "LibreWolf": "librewolf",
     "Microsoft Edge": "msedge",
     "Microsoft Edge (dev)": "msedge-dev",
     "Opera": "opera",
@@ -90,8 +90,8 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
 
                         # Find binary path from $PATH
                         # see https://specifications.freedesktop.org/desktop-entry-spec/latest/exec-variables.html
-                        if result := shutil.which(path):
-                            executable_path = result
+                        if which_path := shutil.which(path):
+                            executable_path = which_path
                             found = True
                             break
 
@@ -99,7 +99,17 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                         continue
 
                 if browser_type := LINUX_DESKTOP_BROWSER_NAMES.get(display_name):
-                    version = subprocess.getoutput(f"{executable_path} --version 2>/dev/null").strip()
+                    version = ""
+                    try:
+                        result = subprocess.run(
+                            [executable_path, "--version"],
+                            capture_output=True,
+                            text=True,
+                            timeout=5,
+                        )
+                        version = result.stdout.strip()
+                    except (OSError, subprocess.TimeoutExpired):
+                        pass
                     if match := VERSION_PATTERN.search(version):
                         version = match[0]
 

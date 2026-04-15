@@ -63,40 +63,46 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
 
                 found_browser_plists.add(plist_path)
 
-                with open(plist_path, "rb") as f:
-                    plist = plistlib.load(f)
-                    yield _get_browser_info(app_dir, browser, plist, version_string)
+                try:
+                    with open(plist_path, "rb") as f:
+                        plist = plistlib.load(f)
+                        yield _get_browser_info(app_dir, browser, plist, version_string)
+                except (OSError, plistlib.InvalidFileException):
+                    continue
 
         # Naively iterate /Applications folder in case the above check fails
         for plist_path in glob.glob("/Applications/*.app/Contents/Info.plist"):
             if plist_path in found_browser_plists:
                 continue
 
-            with open(plist_path, "rb") as f:
-                plist = plistlib.load(f)
-                bundle_id = plist.get("CFBundleIdentifier")
-                if bundle_id not in OSX_BROWSER_BUNDLE_DICT:
-                    continue
+            try:
+                with open(plist_path, "rb") as f:
+                    plist = plistlib.load(f)
+                    bundle_id = plist.get("CFBundleIdentifier")
+                    if bundle_id not in OSX_BROWSER_BUNDLE_DICT:
+                        continue
 
-                found_browser_plists.add(plist_path)
-                browser, _, version_string = OSX_BROWSER_BUNDLE_DICT[bundle_id]
-                app_dir = os.path.dirname(os.path.dirname(plist_path))
+                    found_browser_plists.add(plist_path)
+                    browser, _, version_string = OSX_BROWSER_BUNDLE_DICT[bundle_id]
+                    app_dir = os.path.dirname(os.path.dirname(plist_path))
 
-                yield _get_browser_info(app_dir, browser, plist, version_string)
+                    yield _get_browser_info(app_dir, browser, plist, version_string)
+            except (OSError, plistlib.InvalidFileException):
+                continue
 
 
 def _get_browser_info(app_dir: str, browser: str, plist: dict, version_string: str) -> Browser:
     executable_name = plist["CFBundleExecutable"]
     executable = os.path.join(app_dir, "Contents/MacOS", executable_name)
     display_name = plist.get("CFBundleDisplayName") or plist.get("CFBundleName", browser)
-    version = plist[version_string]
+    version = plist.get(version_string, "")
 
     if browser.startswith("brave"):  # pragma: no cover
         version = _reverse_brave_version(version)
 
     return Browser(
         browser_type=browser,
-        path=executable if browser != "safari" else app_dir,
+        path=executable if not browser.startswith("safari") else app_dir,
         display_name=display_name,
         version=version,
     )
