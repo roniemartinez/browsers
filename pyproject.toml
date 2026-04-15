@@ -1,6 +1,6 @@
 [project]
 name = "pybrowsers"
-version = "1.4.0a1"
+version = "1.4.0"
 description = "Python library for detecting and launching browsers"
 authors = [
     { name = "Ronie Martinez", email = "ronmarti18@gmail.com" }
@@ -28,12 +28,12 @@ repository = "https://github.com/roniemartinez/browsers"
 
 [dependency-groups]
 dev = [
-    "mypy>=1.18.2",
+    "mypy>=1.20.1",
     "pre-commit>=4.5.1",
-    "pytest>=8.4.2",
+    "pytest>=9.0.3",
     "pytest-clarity>=1.0.1",
-    "pytest-cov>=7.0.0",
-    "ruff>=0.12.0",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.15.10",
 ]
 
 [tool.ruff]

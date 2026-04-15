@@ -431,7 +431,7 @@ wheels = [
 
 [[package]]
 name = "pybrowsers"
-version = "1.4.0a1"
+version = "1.4.0"
 source = { editable = "." }
 
 [package.dev-dependencies]
@@ -448,12 +448,12 @@ dev = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "mypy", specifier = ">=1.18.2" },
+    { name = "mypy", specifier = ">=1.20.1" },
     { name = "pre-commit", specifier = ">=4.5.1" },
-    { name = "pytest", specifier = ">=8.4.2" },
+    { name = "pytest", specifier = ">=9.0.3" },
     { name = "pytest-clarity", specifier = ">=1.0.1" },
-    { name = "pytest-cov", specifier = ">=7.0.0" },
-    { name = "ruff", specifier = ">=0.12.0" },
+    { name = "pytest-cov", specifier = ">=7.1.0" },
+    { name = "ruff", specifier = ">=0.15.10" },
 ]
 
 [[package]]
