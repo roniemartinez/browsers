@@ -3,7 +3,7 @@ import os
 import plistlib
 import subprocess
 import sys
-from typing import Iterator
+from collections.abc import Iterator
 
 from .common import Browser
 
