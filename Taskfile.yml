@@ -3,25 +3,6 @@
 version: '3'
 
 tasks:
-  install:
-    cmds:
-      - uv sync
-
-  install-actions:
-    cmds:
-      - uv sync
-
-  format:
-    cmds:
-      - uv run ruff check --fix .
-      - uv run ruff format .
-
-  lint:
-    cmds:
-      - uv run ruff check .
-      - uv run ruff format --check .
-      - uv run mypy tests browsers
-
   test:
     cmds:
       - uv run pytest
