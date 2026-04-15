@@ -53,3 +53,40 @@ def test_launch_chrome_test(mock_launch: mock.MagicMock) -> None:
 def test_launch_no_browser(mock_launch: mock.MagicMock) -> None:
     browsers.launch("hello", url="https://github.com/roniemartinez/browsers")
     mock_launch.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    "args, url, expected_command",
+    (
+        pytest.param(
+            ["--private-window"],
+            "https://example.com",
+            ["/usr/bin/firefox", "--private-window", "https://example.com"],
+            id="private-window-with-url",
+        ),
+        pytest.param(
+            [],
+            "https://example.com",
+            ["/usr/bin/firefox", "-new-tab", "https://example.com"],
+            id="url-only",
+        ),
+        pytest.param(
+            [],
+            None,
+            ["/usr/bin/firefox"],
+            id="no-args-no-url",
+        ),
+        pytest.param(
+            ["--private-window"],
+            None,
+            ["/usr/bin/firefox", "--private-window"],
+            id="private-window-no-url",
+        ),
+    ),
+)
+@mock.patch("subprocess.Popen")
+def test_firefox_command_construction(
+    mock_popen: mock.MagicMock, args: list[str], url: str | None, expected_command: list[str]
+) -> None:
+    browsers._launch("firefox", "/usr/bin/firefox", args, url)
+    mock_popen.assert_called_once_with(expected_command)
