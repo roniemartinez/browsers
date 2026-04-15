@@ -2,7 +2,7 @@ import fnmatch
 import logging
 import subprocess
 import sys
-from typing import Iterator, Optional, Sequence
+from collections.abc import Iterator, Sequence
 
 from . import linux, osx, windows
 from .common import Browser
@@ -33,7 +33,7 @@ def browsers() -> Iterator[Browser]:
         )
 
 
-def get(browser: str, version: str = "*") -> Optional[Browser]:
+def get(browser: str, version: str = "*") -> Browser | None:
     """
     Returns the information for the provided browser key.
 
@@ -49,8 +49,8 @@ def get(browser: str, version: str = "*") -> Optional[Browser]:
 
 
 def launch(
-    browser: str, version: str = "*", url: Optional[str] = None, args: Optional[Sequence[str]] = None
-) -> Optional[subprocess.Popen]:
+    browser: str, version: str = "*", url: str | None = None, args: Sequence[str] | None = None
+) -> subprocess.Popen | None:
     """
     Launches a web browser.
 
@@ -70,7 +70,7 @@ def launch(
 
 
 def _launch(
-    browser: str, path: str, args: Sequence[str], url: Optional[str] = None
+    browser: str, path: str, args: Sequence[str], url: str | None = None
 ) -> subprocess.Popen:  # pragma: no cover
     url_arg = []
 

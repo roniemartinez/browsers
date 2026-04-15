@@ -2,8 +2,8 @@ import contextlib
 import ctypes
 import os
 import sys
+from collections.abc import Iterator
 from ctypes import wintypes
-from typing import Iterator
 
 from .common import Browser
 

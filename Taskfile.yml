@@ -5,36 +5,30 @@ version: '3'
 tasks:
   install:
     cmds:
-      - pip3 install -U pip setuptools poetry
-      - poetry install
+      - uv sync
 
   install-actions:
     cmds:
-      - pip3 install pip setuptools poetry
-      - poetry config virtualenvs.create false
-      - poetry install
+      - uv sync
 
   format:
     cmds:
-      - poetry run autoflake --remove-all-unused-imports --in-place -r --exclude __init__.py .
-      - poetry run isort .
-      - poetry run black .
+      - uv run ruff check --fix .
+      - uv run ruff format .
 
   lint:
     cmds:
-      - poetry run autoflake --remove-all-unused-imports --in-place -r --exclude __init__.py --check .
-      - poetry run isort --check-only .
-      - poetry run black --check .
-      - poetry run pflake8 .
-      - poetry run mypy tests browsers
+      - uv run ruff check .
+      - uv run ruff format --check .
+      - uv run mypy tests browsers
 
   test:
     cmds:
-      - poetry run pytest
+      - uv run pytest
 
   tag:
     vars:
       VERSION:
-        sh: poetry version --short
+        sh: uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])"
     cmds:
       - git tag -s -a {{ .VERSION }} -m "Release {{ .VERSION }}"
