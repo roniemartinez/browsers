@@ -29,6 +29,6 @@ tasks:
   tag:
     vars:
       VERSION:
-        sh: uv run python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])"
+        sh: uv version --short
     cmds:
       - git tag -s -a {{ .VERSION }} -m "Release {{ .VERSION }}"
