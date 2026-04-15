@@ -1,6 +1,7 @@
 import contextlib
 import ctypes
 import os
+import shlex
 import sys
 from collections.abc import Iterator
 from ctypes import wintypes
@@ -65,7 +66,7 @@ def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Browser]: 
 
                     try:
                         cmd = winreg.QueryValue(hkey, rf"{subkey}\shell\open\command")
-                        cmd = cmd.strip('"')
+                        cmd = shlex.split(cmd, posix=False)[0].strip('"')
                         os.stat(cmd)
                     except (OSError, AttributeError, TypeError, ValueError):  # pragma: no cover
                         continue
