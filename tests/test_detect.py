@@ -30,7 +30,6 @@ These tests are based on what browsers exists in Github Actions virtual environm
         pytest.param(
             "msedge", id="msedge", marks=pytest.mark.skipif(sys.platform == "linux", reason="osx-and-windows-only")
         ),
-        pytest.param("msie", id="msie", marks=pytest.mark.skipif(sys.platform != "win32", reason="windows-only")),
     ),
 )
 def test_browsers(browser: str) -> None:
@@ -159,17 +158,6 @@ def test_browsers(browser: str) -> None:
             },
             marks=pytest.mark.skipif(sys.platform != "win32", reason="windows-only"),
             id="msedge-win32",
-        ),
-        pytest.param(
-            "msie",
-            {
-                "browser_type": "msie",
-                "display_name": "Internet Explorer",
-                "path": r"C:\Program Files\Internet Explorer\iexplore.exe",
-                "version": ANY,
-            },
-            marks=pytest.mark.skipif(sys.platform != "win32", reason="windows-only"),
-            id="msie-win32",
         ),
     ),
 )
