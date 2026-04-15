@@ -75,7 +75,10 @@ def _launch(
     url_arg = []
 
     if browser == "firefox" and url is not None:  # NOTE: this does not happen on firefox-developer and firefox-nightly
-        args = ("-new-tab", url, *args)
+        if args:
+            args = (*args, url)
+        else:
+            args = ("-new-tab", url)
     elif url is not None:
         url_arg.append(url)
 
