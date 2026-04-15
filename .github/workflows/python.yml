@@ -19,6 +19,8 @@ concurrency:
 jobs:
   test:
     runs-on: ${{ matrix.os }}
+    env:
+      UV_PYTHON: ${{ matrix.python-version }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]

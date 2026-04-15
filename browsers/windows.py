@@ -68,7 +68,7 @@ def _win32_browsers_from_registry(tree: int, access: int) -> Iterator[Browser]: 
                         cmd = winreg.QueryValue(hkey, rf"{subkey}\shell\open\command")
                         cmd = shlex.split(cmd, posix=False)[0].strip('"')
                         os.stat(cmd)
-                    except (OSError, AttributeError, TypeError, ValueError):  # pragma: no cover
+                    except (OSError, AttributeError, TypeError, ValueError, IndexError):  # pragma: no cover
                         continue
 
                     yield Browser(
