@@ -99,6 +99,7 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                         continue
 
                 if browser_type := LINUX_DESKTOP_BROWSER_NAMES.get(display_name):
+                    version = ""
                     try:
                         result = subprocess.run(
                             [executable_path, "--version"],
@@ -108,7 +109,7 @@ def browsers() -> Iterator[Browser]:  # type: ignore[return]
                         )
                         version = result.stdout.strip()
                     except (OSError, subprocess.TimeoutExpired):
-                        version = ""
+                        pass
                     if match := VERSION_PATTERN.search(version):
                         version = match[0]
 
