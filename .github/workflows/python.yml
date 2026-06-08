@@ -49,5 +49,5 @@ jobs:
       - name: Test
         run: uv run pytest
       - name: Code Coverage
-        uses: codecov/codecov-action@v6.0.1
+        uses: codecov/codecov-action@v7.0.0
         if: ${{ success() }}
